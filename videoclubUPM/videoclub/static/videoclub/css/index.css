@@ -1,0 +1,13 @@
+/* Move down content because we have a fixed navbar that is 50px tall */
+h1 {
+    color: #FFF;
+}
+
+.as {
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+.loginButton {
+    color: white;
+    background-color: red;
+}
