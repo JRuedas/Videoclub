@@ -3,11 +3,25 @@ h1 {
     color: #FFF;
 }
 
-.as {
-    padding-bottom: 0px;
+.customNavbar {
     margin-bottom: 0px;
+    border: 0px;
 }
-.loginButton {
+
+.noSidesPadding {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.invertedColors {
+    background-color: black;
     color: white;
-    background-color: red;
+}
+
+.navbar-right {
+    float: right!important;
+}
+
+.footerPadding {
+    padding-top: 20px;
 }
