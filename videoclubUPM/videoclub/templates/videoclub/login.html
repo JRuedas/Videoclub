@@ -1,24 +1,43 @@
-<!DOCTYPE html>
-{% load static %}
+<!DOCTYPE html> {% load static %}
 <html>
-    <head>
-        <title>Login - Videoclub UPM</title>
 
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-        <link rel="stylesheet" href={% static 'videoclub/css/index.css' %}>
-    </head>
-    <body>
+<head>
+    <title>Login - Videoclub UPM</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href={% static 'videoclub/css/login.css' %}>
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse customNavbar">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="..">Videoclub Online UPM</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
         <form action={% url 'process_login' %} method="post">
             {% csrf_token %}
             <fieldset>
-                <legend>Log In:</legend>
-                Username<br>
-                <input type="text" name="username"><br>
-                Password:<br>
-                <input type="password" name="password"><br><br>
+                <h2>Log In</h2>
+                <br>
+                <br>
+                <p>Username:</p>
+                <input type="text" name="username">
+                <br>
+                <br>
+                <p>Password:</p>
+                <input type="password" name="password">
+                <br>
+                <br>
+                <br>
                 <input type="submit" value="Submit">
             </fieldset>
-        </form> 
-    </body>
-</html>
+        </form>
+    </div>
+</body>
 
+</html>

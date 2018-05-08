@@ -1,0 +1,17 @@
+.container{
+    text-align: center;
+}
+
+fieldset{
+    align-self: center;
+    position: relative;
+    margin-top: 10%;
+    background-color: #f3f3f3;
+    padding: 6%;
+    display: inline-block;
+    text-align: left;
+}
+
+body{
+    background-color: black;
+}

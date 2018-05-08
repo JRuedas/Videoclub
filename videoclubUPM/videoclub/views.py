@@ -10,6 +10,14 @@ def login(request):
     context = {}
     return render(request, "videoclub/login.html", context)
 
+def film(request):
+    context = {}
+    return render(request, "videoclub/film.html", context)
+
+def search_film(request):
+    context = {}
+    return render(request, "videoclub/search_film.html", context)
+
 texts = []
 
 def process_login (request):

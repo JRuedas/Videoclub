@@ -1,0 +1,30 @@
+body{
+    background-color: #c6c6c6;
+}
+
+.customNavbar {
+    margin-bottom: 0px;
+    border: 0px;
+}
+
+.noSidesPadding {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.invertedColors {
+    background-color: black;
+    color: white;
+}
+
+.navbar-right {
+    float: right!important;
+}
+
+.footerPadding {
+    padding-top: 20px;
+}
+
+#film_info{
+    margin: 2%;
+}
