@@ -6,8 +6,8 @@ fieldset{
     align-self: center;
     position: relative;
     margin-top: 10%;
-    background-color: black;
-    color: white; 
+    background-color: rgb(66, 66, 66);
+    color: gray;
     padding: 6%;
     display: inline-block;
     text-align: left;
