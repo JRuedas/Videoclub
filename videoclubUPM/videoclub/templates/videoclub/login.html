@@ -1,15 +1,21 @@
-<!DOCTYPE html> {% load static %}
-<html>
+<!DOCTYPE html> 
 
+{% load static %}
+
+<html lang="en">
 <head>
+    <meta charset="utf-8">  
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>Login - Videoclub UPM</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-        crossorigin="anonymous">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href={% static 'videoclub/css/login.css' %}>
 </head>
 
-<body>
+<body class="bgBody">
     <nav class="navbar navbar-inverse customNavbar">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -18,6 +24,7 @@
             </div>
         </div>
     </nav>
+
     <div class="container">
         <form action={% url 'process_login' %} method="post">
             {% csrf_token %}
