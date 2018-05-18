@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
         crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href={% static 'videoclub/css/film.css' %}>
 </head>
 
@@ -16,20 +17,56 @@
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">Videoclub Online UPM</a>
+                <a class="navbar-brand" href="..">Videoclub Online UPM</a>
+            </div>
+            <div id="rightTopNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a>Perfil?</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
-    
+
     <div class="container-fluid" id="film_info">
         <div class="row featurette">
-            <div class="col-md-4">
-                <img class="featurette-image img-responsive center-block" src={% static "videoclub/images/img_ex.jpg" %} alt="img"
-                />
+            <div class="col-md-4" style="margin-right: -3%">
+                <img class="featurette-image img-responsive" src={% static "videoclub/images/img_ex.jpg" %} alt="img" />
             </div>
-            <div class="col-md-4">
-                <h1 id="title">Film Title</h1>
-                <p>Text</p>
+            <div class="col-md-6">
+                <div class="container-fluid">
+                    <h1 id="title">Avengers: Infinity War</h1>
+                </div>
+                <br>
+                <div class="container-fluid">
+                    <h3>Sypnosis</h3>
+                    <p>As the Avengers and their allies have continued to protect the world from threats too large for any one
+                        hero to handle, a new danger has emerged from the cosmic shadows: Thanos. A despot of intergalactic
+                        infamy, his goal is to collect all six Infinity Stones, artifacts of unimaginable power, and use
+                        them to inflict his twisted will on all of reality. Everything the Avengers have fought for has led
+                        up to this moment - the fate of Earth and existence itself has never been more uncertain.</p>
+                </div>
+                <div class="container-fluid">
+                    <h3>Video</h3>
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe src="https://www.youtube.com/embed/6ZfuNTqbHE8?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2" style="padding-left: 3%">
+                <div class="container-fluid">
+                    <h3>Información</h3>
+                    <h5>Titulo original: </h5> Texto
+                    <h5>Fecha lanzamiento: </h5> Texto
+                    <h5>Lenguaje original: </h5> Texto
+                    <h5>Duración: </h5> Texto
+                    <h5>Presupuesto: </h5> Texto
+                    <h5>Ingresos: </h5> Texto
+                    <br>
+                    <br>
+                    <h3>Rating</h3>
+                </div>
             </div>
         </div>
     </div>

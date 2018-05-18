@@ -27,4 +27,14 @@ body{
 
 #film_info{
     margin: 2%;
+    padding: 2%;
+    background: #f3f3f3;
+}
+
+#title{
+    font-weight: bold;
+}
+
+h5{
+    font-weight: bold;
 }
