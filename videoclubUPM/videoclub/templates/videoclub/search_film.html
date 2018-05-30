@@ -28,12 +28,17 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="#">Modify Users</a>
+                            <a href="./signup">Modify Users</a>
                         </li>
                         <li>
-                            <a href="#">Modify films</a>
+                            <a href="#">Modify Films</a>
                         </li>
                     </ul>
+                </li>
+                <li>
+                    <form action={% url 'process_logout' %}>
+                        <button type="button" class="btn btn-default navbar-btn" action={% url 'process_logout' %}>Log out</button>
+                    </form>
                 </li>
             </ul>
     </nav>

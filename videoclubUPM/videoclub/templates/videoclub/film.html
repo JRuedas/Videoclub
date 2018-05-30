@@ -19,19 +19,30 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="..">Videoclub Online UPM</a>
             </div>
-            <div id="rightTopNavbar">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a>Log out?</a>
-                    </li>
-                </ul>
-            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="admin">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="./signup">Modify Users</a>
+                        </li>
+                        <li>
+                            <a href="#">Modify Films</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a action={% url 'process_logout' %}>Log out</a>
+                </li>
+            </ul>
         </div>
     </nav>
 
     <div class="container-fluid" id="film_info">
         <div class="row featurette">
-            <div class="col-md-4" >
+            <div class="col-md-4">
                 <div class="container-fluid">
                     <img class="featurette-image img-responsive" src={% static "videoclub/images/img_ex.jpg" %} alt="img" />
                 </div>
@@ -72,6 +83,9 @@
             </div>
         </div>
     </div>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 
 </html>
