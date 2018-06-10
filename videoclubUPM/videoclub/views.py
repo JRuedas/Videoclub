@@ -42,6 +42,11 @@ def process_login (request):
             
     return response
 
+def process_logout (request):
+    context = {}
+    logout(request)
+    return render(request, "videoclub/index.html", context)
+
 def process_signup (request):
     context = {}
 
@@ -49,8 +54,3 @@ def process_signup (request):
         form = UserCreationForm()
             
     return render(request, 'signup.html', {'form': form})
-
-def process_logout (request):
-    context = {}
-    logout(request)
-    return render(request, "videoclub/index.html", context)
