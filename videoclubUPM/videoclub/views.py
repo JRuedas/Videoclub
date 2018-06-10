@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.template import loader
+from django.http import HttpResponseRedirect
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm 
 # Create your views here.
@@ -27,9 +29,6 @@ def search_film(request):
 def process_login (request):
     context = {}
 
-    #Default option, not authenticated, return to index TODO: show error
-    response = render(request, "videoclub/index.html", context)
-
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -38,9 +37,10 @@ def process_login (request):
         if user is not None:
             # User authenticated
             login(request, user)
-            response = render(request, "videoclub/search_film.html", context)
-            
-    return response
+            return render(request, "videoclub/search_film.html", context)
+        else:
+            messages.error(request,'Incorrect user or password')
+            return HttpResponseRedirect("/videoclub/login")
 
 def process_logout (request):
     context = {}

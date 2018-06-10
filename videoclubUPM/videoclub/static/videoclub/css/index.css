@@ -1,7 +1,3 @@
-/* Move down content because we have a fixed navbar that is 50px tall */
-h1 {
-    color: #FFF;
-}
 
 .customNavbar {
     margin-bottom: 0px;
