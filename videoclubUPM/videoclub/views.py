@@ -7,6 +7,8 @@ from django.contrib.auth.forms import UserCreationForm
 from . import forms
 # Create your views here.
 
+key = "f6093d8fefcd7f83e17a8af193b48d8d"
+
 def index(request):
     context = {}
     return render(request, "videoclub/index.html", context)
