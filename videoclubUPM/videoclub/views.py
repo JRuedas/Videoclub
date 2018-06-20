@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm 
+from . import forms
 # Create your views here.
 
 def index(request):
@@ -26,6 +27,10 @@ def search_film(request):
     context = {}
     return render(request, "videoclub/search_film.html", context)
 
+def add_film(request):
+    context = {}
+    return render(request, "videoclub/add_film.html", context)
+
 def process_login (request):
     context = {}
 
@@ -47,10 +52,13 @@ def process_logout (request):
     logout(request)
     return render(request, "videoclub/index.html", context)
 
-def process_signup (request):
-    context = {}
-
+def signup(request):
     if request.method == 'POST':
-        form = UserCreationForm()
+        form = forms.SignUpForm(request.POST)
+        if(form.is_valid):
+            form.save()
+
+    else:
+        form = forms.SignUpForm()
             
-    return render(request, 'signup.html', {'form': form})
+    return render(request, 'videoclub/signup.html', {'form' : form})

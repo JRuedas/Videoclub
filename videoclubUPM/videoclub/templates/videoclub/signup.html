@@ -21,33 +21,30 @@
           <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-              <a class="navbar-brand" href="..">Videoclub Online UPM</a>
+              <a class="navbar-brand" href="./search_film">Videoclub Online UPM</a>
             </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div id="rightTopNavbar">
-              <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right">
                 <li class="admin">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin
-                    <span class="caret"></span>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li>
-                      <a href="#">Modify Users</a>
-                    </li>
-                    <li>
-                      <a href="#">Modify Films</a>
-                    </li>
-                  </ul>
-                </li>   
-              </ul>
-            </div>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="./add_film">Add Films</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href={% url 'process_logout' %}>Logout</a>
+                </li>
+            </ul>
           </div>
         </nav>
 
-    <div class="container">
-        <form action={% url 'process_signup' %} method="post">
+    <div class="container" style="text-align: center">
+        <form action={% url 'signup' %} method="post">
             {% csrf_token %}
-            <fieldset>
+            <fieldset id="fieldContainer">
                 <h2>Sign Up</h2>
                 <br>
                 <br>
@@ -55,12 +52,16 @@
                 <input type="text" name="username">
                 <br>
                 <br>
-                <p>Password:</p>
-                <input type="password" name="password">
-                <br>
-                <br>
                 <p>Email:</p>
                 <input type="email" name="email">
+                <br>
+                <br>
+                <p>Password:</p>
+                <input type="password" name="password1">
+                <br>
+                <br>
+                <p>Confirm Password:</p>
+                <input type="password" name="password2">
                 <br>
                 <br>
                 <br>

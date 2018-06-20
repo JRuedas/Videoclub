@@ -8,7 +8,7 @@
     text-align: center;
 }
 
-.loginFieldSet{
+#fieldContainer{
     align-self: center;
     position: relative;
     margin-top: 10%;

@@ -28,7 +28,7 @@
     <div class="loginContainer">
         <form action={% url 'process_login' %} method="post">
             {% csrf_token %}
-            <fieldset class="loginFieldSet">
+            <fieldset class="loginFieldSet" id="fieldContainer">
                 <h2>Log In</h2>
                 <br>
                 <p>Username:</p>
