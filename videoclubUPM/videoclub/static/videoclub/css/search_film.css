@@ -1,3 +1,6 @@
+body{
+    background-color: #c6c6c6;
+}
 
 .customNavbar {
     margin-bottom: 0px;
@@ -11,3 +14,9 @@
 #edittext {
     padding-top: 1%
 }
+
+#film_info{
+    margin: 2%;
+    background: #f3f3f3;
+}
+
