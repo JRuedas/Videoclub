@@ -8,14 +8,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>SignUp - Videoclub UPM</title>
+    <title>Create user - Videoclub UPM</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href={% static 'videoclub/css/login.css' %}>
+    <link rel="stylesheet" href={% static 'videoclub/css/create_user.css' %}>
 </head>
 
-<body class="bgBody">
+<body class="">
     <body>
         <nav class="navbar navbar-inverse customNavbar">
           <div class="container-fluid">
@@ -41,39 +41,18 @@
           </div>
         </nav>
 
-    <div class="container" style="text-align: center">
-        <form action={% url 'signup' %} method="post">
-            {% csrf_token %}
-            <fieldset id="fieldContainer">
-                <h2>Sign Up</h2>
-                <br>
-                <br>
-                <p>Username:</p>
-                <input type="text" name="username">
-                <br>
-                <br>
-                <p>Email:</p>
-                <input type="email" name="email">
-                <br>
-                <br>
-                <p>Password:</p>
-                <input type="password" name="password1">
-                <br>
-                <br>
-                <p>Confirm Password:</p>
-                <input type="password" name="password2">
-                <br>
-                <br>
-                <br>
-                <input type="submit" value="Submit">
-            </fieldset>
-        </form>
-        <br>
-        <p><a class="btn btn-info btn-lg" href="http://localhost:8000/admin/auth/user/" role="button">Modify Users &raquo;</a></p>
+    <div>
+        {% block content %}
+            <h1>New user</h1>
+            <form method="POST" class="post-form"   >
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="save btn btn-default">Update</button>
+            </form>
+        {% endblock %}
     </div>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
-
 </html>

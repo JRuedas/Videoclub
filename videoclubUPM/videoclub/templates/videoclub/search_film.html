@@ -28,10 +28,13 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="./signup">Modify Users</a>
+                            <a href={% url 'list_users' %}>List users</a>
                         </li>
                         <li>
-                            <a href="./add_film">Add Films</a>
+                            <a href={% url 'create_user' %}>Create user</a>
+                        </li>
+                        <li>
+                            <a href={% url 'add_film' %}>Add film</a>
                         </li>
                     </ul>
                 </li>
