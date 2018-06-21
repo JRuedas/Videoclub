@@ -21,7 +21,7 @@
           <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-              <a class="navbar-brand" href="./search_film">Videoclub Online UPM</a>
+              <a class="navbar-brand" href={% url 'films' %}>Videoclub Online UPM</a>
             </div>
             <ul class="nav navbar-nav navbar-right">
                 <li class="admin">
@@ -35,7 +35,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href={% url 'process_logout' %}>Logout</a>
+                    <a href={% url 'doLogout' %}>Logout</a>
                 </li>
             </ul>
           </div>
@@ -43,12 +43,15 @@
 
     <div>
         {% block content %}
-            <h1>New user</h1>
+            <h1>Modify user info</h1>
             <form method="POST" class="post-form"   >
                 {% csrf_token %}
                 {{ form.as_p }}
                 <button type="submit" class="save btn btn-default">Update</button>
             </form>
+
+            <br>
+            <a href="{% url 'delete_user' %}?username={{ user.username | urlencode }}">Delete user {{ user.username }}</a>
         {% endblock %}
     </div>
 

@@ -16,7 +16,7 @@ class CreateUserForm(UserCreationForm):
 class UserUpdate(UserChangeForm):
     class Meta:
         model = User
-        fields = ('username', 'email', 'is_staff')
+        fields = ('username', 'first_name', 'last_name', 'email', 'password', 'is_staff')
         help_texts = {
             'username': '',
             'is_staff': '',

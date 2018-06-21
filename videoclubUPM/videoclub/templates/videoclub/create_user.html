@@ -21,7 +21,7 @@
           <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-              <a class="navbar-brand" href="./search_film">Videoclub Online UPM</a>
+              <a class="navbar-brand" href={% url 'films' %}>Videoclub Online UPM</a>
             </div>
             <ul class="nav navbar-nav navbar-right">
                 <li class="admin">
@@ -35,7 +35,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href={% url 'process_logout' %}>Logout</a>
+                    <a href={% url 'doLogout' %}>Logout</a>
                 </li>
             </ul>
           </div>
