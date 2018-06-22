@@ -12,5 +12,6 @@ urlpatterns = [
     path('search_film', views.search_film, name='search_film'),
     path('signup', views.signUp, name='signup'),
     path('add_film', views.add_film, name='add_film'),
+    path('add_film/search', views.find_filmsAdd, name='find_filmsAdd'),
     url(r'^signup/$', views.signup, name='signup')
 ]

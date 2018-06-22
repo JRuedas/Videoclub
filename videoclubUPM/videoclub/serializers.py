@@ -7,7 +7,7 @@ class MovieSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Movie
-        fields = ('id_movie', 'title', 'overview', 'date', 'director', 'url_poster', 'vote_average', 'url_video', 'budget', 'revenue', 'original_language', 'status')
+        fields = ('id', 'id_movie', 'title', 'overview', 'date', 'director', 'url_poster', 'vote_average', 'url_video', 'budget', 'revenue', 'original_language', 'status')
 
 
 class CastSerializer(serializers.ModelSerializer):
@@ -16,4 +16,4 @@ class CastSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Cast
-        fields = ('name', 'movies')
+        fields = ('id', 'name', 'movies')

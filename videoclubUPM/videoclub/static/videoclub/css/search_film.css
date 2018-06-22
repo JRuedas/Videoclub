@@ -16,7 +16,10 @@ body{
 }
 
 #film_info{
-    margin: 2%;
+    margin-inline-end: 2%;
+    margin-inline-start: 2%;
+    margin-block-end: 1%;
+    margin-block-start: 1%;
     background: #f3f3f3;
 }
 
