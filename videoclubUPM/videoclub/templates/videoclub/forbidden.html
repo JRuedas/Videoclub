@@ -22,21 +22,7 @@
                 <a class="navbar-brand" href={% url 'films' %}>Videoclub Online UPM</a>
             </div>
             <ul class="nav navbar-nav navbar-right">
-                {% if user.is_staff %}
-                <li class="admin">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                                <a href={% url 'list_users' %}>List users</a>
-                            </li>
-                            <li>
-                                <a href={% url 'films' %}>Films</a>
-                        </li>
-                    </ul>
-                </li>
-                {% endif %}
+                {% if user.is_authenticated %}
                 <li class="profile">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile
                         <span class="caret"></span>
@@ -50,23 +36,24 @@
                         </li>
                     </ul>
                 </li>
+                {% endif %}
                 <li>
                     <a href={% url 'doLogout' %}>Logout</a>
                 </li>
             </ul>
     </nav>
 
-    <div class="container-fluid">
-        <form id="edittext">
-            <div class="input-group input-group-lg">
-                <input type="text" class="form-control" placeholder="Search film">
-                <div class="input-group-btn">
-                    <button class="btn btn-info" type="submit">
-                        <i class="glyphicon glyphicon-search"></i>
-                    </button>
-                </div>
-            </div>
-        </form>
+    <div class="error-template">
+        <h1>
+            Oops!</h1>
+        <h2>
+            403 Forbidden</h2>
+        <div class="error-details">
+            You're trying to do something nasty, better luck next time!
+        </div>
+        <div class="error-actions">
+            <a href={% url 'redirect_forbidden' %} class="btn btn-primary"><span class="glyphicon glyphicon-home"></span>Go to index </a>
+        </div>
     </div>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

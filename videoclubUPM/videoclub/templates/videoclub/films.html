@@ -22,6 +22,7 @@
                 <a class="navbar-brand" href={% url 'films' %}>Videoclub Online UPM</a>
             </div>
             <ul class="nav navbar-nav navbar-right">
+                {% if user.is_staff %}
                 <li class="admin">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin
                         <span class="caret"></span>
@@ -31,10 +32,21 @@
                             <a href={% url 'list_users' %}>List users</a>
                         </li>
                         <li>
-                            <a href={% url 'create_user' %}>Create user</a>
+                            <a href={% url 'add_film' %}>Add film</a>
+                        </li>
+                    </ul>
+                </li>
+                {% endif %}
+                <li class="profile">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href={% url 'edit_profile' %}>Edit profile</a>
                         </li>
                         <li>
-                            <a href={% url 'add_film' %}>Add film</a>
+                            <a href={% url 'change_password' %}>Change password</a>
                         </li>
                     </ul>
                 </li>
