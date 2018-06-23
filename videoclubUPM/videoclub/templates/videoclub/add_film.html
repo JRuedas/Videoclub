@@ -87,12 +87,12 @@
                     <h4 style="color: #394450">{{ element.date }}</h4>
                 </div>
                 <div class="container-fluid">
-                    <h3>Sypnosis</h3>
+                    <h3>Overview</h3>
                     <p>{{ element.overview }}</p>
                 </div>
             </div>
             <div class="col-md-2 text-center">
-                <a class="btn btn-info btn-lg" href="{% url 'film' %}?title={{ element.title | urlencode }}" role="button">See more &raquo;</a>
+                <a class="btn btn-info btn-lg" href="{% url 'doSeeMoreToAdd' %}?id={{ element.id | urlencode }}" role="button">See more &raquo;</a>
             </div>
         </div>
     </div>

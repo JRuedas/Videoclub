@@ -180,6 +180,50 @@ def find_filmsAdd(request):
 
     return render(request, 'videoclub/add_film.html', context)
 
+
+@login_required(login_url='/videoclub/login')
+@staff_member_required(login_url='/videoclub/forbidden')
+def doSeeMoreToAdd(request):
+    context = {}
+    found = True
+    id_movie = request.GET.get('id')
+    endpoint_film = 'https://api.themoviedb.org/3/movie/{id_number}?api_key={key_id}'
+    url_film = endpoint_film.format(key_id=key, id_number=id_movie)
+    response_film = requests.get(url_film)
+    if response_film.status_code == 200: #SUCCESS
+        result_film = response_film.json()
+        result_film['poster_path'] = 'http://image.tmdb.org/t/p/w500/%s' % result_film['poster_path']
+        youtube_video = 'https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0' 
+
+        endpoint_video = 'https://api.themoviedb.org/3/movie/{id_number}/videos?api_key={key_id}'
+        url_video = endpoint_video.format(key_id=key, id_number=id_movie)
+        response_video = requests.get(url_video)
+        if response_video.status_code == 200: #SUCCESS
+            search_video = response_video.json()
+            results = search_video['results']
+            if results:
+                first_video = results[0]
+                youtube_video =  'https://www.youtube.com/embed/%s?rel=0' % first_video['key'] 
+
+        context = {
+            'found': found,
+            'title': result_film['title'],
+            'overview': result_film['overview'],
+            'url_video': youtube_video,
+            'url_poster': result_film['poster_path'],
+            'original_title': result_film['original_title'],
+            'release_date': result_film['release_date'],
+            'original_language': result_film['original_language'],
+            'runtime': result_film['runtime'],
+            'budget': result_film['budget'],
+            'revenue': result_film['revenue'],
+            'status': result_film['status'],
+            'vote_average': result_film['vote_average'],
+        }
+        return render(request, 'videoclub/film.html', context)
+    else:
+        return redirect('/videoclub/films')
+
 def forbidden(request):
     context = {}
     return render(request, "videoclub/forbidden.html", context)

@@ -52,49 +52,52 @@
         </div>
     </nav>
 
+    {% if found %}
     <div class="container-fluid" id="film_info">
         <div class="row featurette">
             <div class="col-md-4">
                 <div class="container-fluid">
-                    <img class="featurette-image img-responsive" src={% static "videoclub/images/img_ex.jpg" %} alt="img" />
+                    <img class="featurette-image img-responsive" src={{ url_poster }} alt="img" />
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="container-fluid">
-                    <h1 id="title">Avengers: Infinity War</h1>
+                    <h1 id="title">{{ title }}</h1>
                 </div>
                 <br>
                 <div class="container-fluid">
-                    <h3>Sypnosis</h3>
-                    <p>As the Avengers and their allies have continued to protect the world from threats too large for any one
-                        hero to handle, a new danger has emerged from the cosmic shadows: Thanos. A despot of intergalactic
-                        infamy, his goal is to collect all six Infinity Stones, artifacts of unimaginable power, and use
-                        them to inflict his twisted will on all of reality. Everything the Avengers have fought for has led
-                        up to this moment - the fate of Earth and existence itself has never been more uncertain.</p>
+                    <h3>Overview</h3>
+                    <p>{{ overview }}</p>
                 </div>
                 <div class="container-fluid">
                     <h3>Video</h3>
                     <div class="embed-responsive embed-responsive-16by9">
-                        <iframe src="https://www.youtube.com/embed/6ZfuNTqbHE8?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        <iframe src={{ url_video }} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
             <div class="col-md-2" style="padding-left: 3%">
                 <div class="container-fluid">
-                    <h3>Información</h3>
-                    <h5>Titulo original: </h5> Texto
-                    <h5>Fecha lanzamiento: </h5> Texto
-                    <h5>Lenguaje original: </h5> Texto
-                    <h5>Duración: </h5> Texto
-                    <h5>Presupuesto: </h5> Texto
-                    <h5>Ingresos: </h5> Texto
+                    <h3>Facts</h3>
+                    <h5>Original title: </h5> {{ original_title }}
+                    <h5>Release date: </h5> {{ release_date }}
+                    <h5>Original language: </h5> {{ original_language }}
+                    <h5>Runtime: </h5> {{ runtime }} min
+                    <h5>Budget: </h5> {{ budget }} $
+                    <h5>Revenue: </h5> {{ revenue }} $
+                    <h5>Status: </h5> {{ status }} 
                     <br>
                     <br>
-                    <h3>Rating</h3>
+                    <h3>Rating</h3> <h5>{{ vote_average }}</h5>
+                    <br>
+                    <h3>Cast</h3>
+                    <h5>Directors: </h5> COMPLETAR
+                    <h5>Main: </h5> COMPLETAR
                 </div>
             </div>
         </div>
     </div>
+    {% endif %}
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

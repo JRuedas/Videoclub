@@ -20,6 +20,9 @@ class Movie(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        ordering = ('title',)
+
 
 class Cast(models.Model):
     name = models.CharField(max_length=100, null=False)
