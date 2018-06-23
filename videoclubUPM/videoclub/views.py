@@ -154,17 +154,9 @@ def add_film(request):
     context = {}
     return render(request, "videoclub/add_film.html", context)
 
-def forbidden(request):
-    context = {}
-    return render(request, "videoclub/forbidden.html", context)
-
-def redirect_forbidden(request):
-    if request.user.is_authenticated:
-        return redirect("/videoclub/films")
-    else:
-        return redirect("/videoclub/login")
-
 # https://simpleisbetterthancomplex.com/tutorial/2018/02/03/how-to-use-restful-apis-with-django.html
+@login_required(login_url='/videoclub/login')
+@staff_member_required(login_url='/videoclub/forbidden')
 def find_filmsAdd(request):
     context={}
     
@@ -187,3 +179,13 @@ def find_filmsAdd(request):
             }
 
     return render(request, 'videoclub/add_film.html', context)
+
+def forbidden(request):
+    context = {}
+    return render(request, "videoclub/forbidden.html", context)
+
+def redirect_forbidden(request):
+    if request.user.is_authenticated:
+        return redirect("/videoclub/films")
+    else:
+        return redirect("/videoclub/login")
