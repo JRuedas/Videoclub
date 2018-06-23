@@ -6,6 +6,7 @@ from django.db import models
 class Movie(models.Model):
     id_movie = models.IntegerField()
     title = models.CharField(max_length=200, null=False)
+    original_title = models.CharField(max_length=200, null=False)
     overview = models.CharField(max_length=2000, null=False)
     date = models.DateField(null=False)
     director = models.CharField(max_length=100, null=False)
@@ -16,6 +17,7 @@ class Movie(models.Model):
     revenue = models.DecimalField(max_digits=100, decimal_places=2)
     original_language = models.CharField(max_length=100)
     status = models.CharField(max_length=20)
+    runtime = models.IntegerField()
 
     def __str__(self):
         return self.title

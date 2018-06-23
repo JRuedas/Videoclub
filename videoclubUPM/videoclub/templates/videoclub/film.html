@@ -27,10 +27,10 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                                <a href={% url 'list_users' %}>List users</a>
-                            </li>
-                            <li>
-                                <a href={% url 'add_film' %}>Add film</a>
+                            <a href={% url 'list_users' %}>List users</a>
+                        </li>
+                        <li>
+                            <a href={% url 'add_film' %}>Add film</a>
                         </li>
                     </ul>
                 </li>
@@ -57,38 +57,47 @@
         <div class="row featurette">
             <div class="col-md-4">
                 <div class="container-fluid">
-                    <img class="featurette-image img-responsive" src={{ url_poster }} alt="img" />
+                    <img class="featurette-image img-responsive" src={{ film.url_poster }} alt="img" />
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="container-fluid">
-                    <h1 id="title">{{ title }}</h1>
+                    <h1 id="title">{{ film.title }}</h1>
                 </div>
                 <br>
                 <div class="container-fluid">
                     <h3>Overview</h3>
-                    <p>{{ overview }}</p>
+                    <p>{{ film.overview }}</p>
                 </div>
                 <div class="container-fluid">
                     <h3>Video</h3>
                     <div class="embed-responsive embed-responsive-16by9">
-                        <iframe src={{ url_video }} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        <iframe src={{ film.url_video }} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
             <div class="col-md-2" style="padding-left: 3%">
                 <div class="container-fluid">
+                    {% block content %}
+                    <form method="POST" class="post-form" action={% url 'add_film' %}>
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <input type='hidden' name='film' value="{{ film }}"/>
+                        <input type="submit" value="Add" class="btn btn-default">
+                    </form>
+
+                    {% endblock %}
                     <h3>Facts</h3>
-                    <h5>Original title: </h5> {{ original_title }}
-                    <h5>Release date: </h5> {{ release_date }}
-                    <h5>Original language: </h5> {{ original_language }}
-                    <h5>Runtime: </h5> {{ runtime }} min
-                    <h5>Budget: </h5> {{ budget }} $
-                    <h5>Revenue: </h5> {{ revenue }} $
-                    <h5>Status: </h5> {{ status }} 
+                    <h5>Original title: </h5> {{ film.original_title }}
+                    <h5>Release date: </h5> {{ film.release_date }}
+                    <h5>Original language: </h5> {{ film.original_language }}
+                    <h5>Runtime: </h5> {{ film.runtime }} min
+                    <h5>Budget: </h5> {{ film.budget }} $
+                    <h5>Revenue: </h5> {{ film.revenue }} $
+                    <h5>Status: </h5> {{ film.status }} 
                     <br>
                     <br>
-                    <h3>Rating</h3> <h5>{{ vote_average }}</h5>
+                    <h3>Rating</h3> <h5>{{ film.vote_average }}</h5>
                     <br>
                     <h3>Cast</h3>
                     <h5>Directors: </h5> COMPLETAR
@@ -96,7 +105,6 @@
                     <br>
                     <br>
                     <br>
-                    <a class="btn btn-info btn-lg" role="button">Add &raquo;</a>
                 </div>
             </div>
         </div>

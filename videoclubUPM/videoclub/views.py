@@ -10,6 +10,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 from . import forms
 import requests
+from videoclub.models import Movie
 # Create your views here.
 
 key = "f6093d8fefcd7f83e17a8af193b48d8d"
@@ -180,7 +181,6 @@ def find_filmsAdd(request):
 
     return render(request, 'videoclub/add_film.html', context)
 
-
 @login_required(login_url='/videoclub/login')
 @staff_member_required(login_url='/videoclub/forbidden')
 def doSeeMoreToAdd(request):
@@ -205,24 +205,62 @@ def doSeeMoreToAdd(request):
                 first_video = results[0]
                 youtube_video =  'https://www.youtube.com/embed/%s?rel=0' % first_video['key'] 
 
+        film = Movie()
+        film.title = result_film['title']
+        film.original_title = result_film['original_title']
+        film.overview = result_film['overview']
+        film.date = result_film['release_date']
+        film.director = "Director TBI"
+        film.url_poster = result_film['poster_path']
+        film.vote_average = result_film['vote_average']
+        film.url_video = youtube_video
+        film.budget = result_film['budget']
+        film.revenue = result_film['revenue']
+        film.original_language = result_film['original_language']
+        film.status = result_film['status']
+        film.runtime = result_film['runtime']
+
+        
         context = {
             'found': found,
-            'title': result_film['title'],
-            'overview': result_film['overview'],
-            'url_video': youtube_video,
-            'url_poster': result_film['poster_path'],
-            'original_title': result_film['original_title'],
-            'release_date': result_film['release_date'],
-            'original_language': result_film['original_language'],
-            'runtime': result_film['runtime'],
-            'budget': result_film['budget'],
-            'revenue': result_film['revenue'],
-            'status': result_film['status'],
-            'vote_average': result_film['vote_average'],
+            'film': film,
+            'filmId': id_movie,
         }
+        
         return render(request, 'videoclub/film.html', context)
     else:
         return redirect('/videoclub/films')
+
+@login_required(login_url='/videoclub/login')
+@staff_member_required(login_url='/videoclub/forbidden')
+def doAddFilm(request):
+    if request.method == 'POST':
+        film = request.POST['film']
+        film.save()
+        return redirect("/videoclub/login")
+
+@login_required(login_url='/videoclub/login')
+@staff_member_required(login_url='/videoclub/forbidden')
+def edit_film(request):
+    context = {}
+
+    film = request.GET.get('film')
+
+    if request.method == 'POST':
+        form = forms.EditFilmForm(request.POST, instance=film)
+
+        if form.is_valid():
+            form.save()
+            return redirect("/videoclub/films")
+        else:
+            return render(request, "videoclub/edit_film.html", context)
+    else:
+        form = forms.EditFilmForm(instance=film)
+        context = {
+            'form': form,
+            "film" : film
+            }
+        return render(request, "videoclub/edit_film.html", context)
 
 def forbidden(request):
     context = {}

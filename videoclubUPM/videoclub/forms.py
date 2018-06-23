@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
-
+from django.forms import ModelForm
+from videoclub.models import Movie
 
 class CreateUserForm(UserCreationForm):
     class Meta:
@@ -28,3 +29,9 @@ class EditProfileForm(UserChangeForm):
         help_texts = {
             'username': ''
         }
+
+class EditFilmForm(ModelForm):
+    class Meta:
+        model = Movie
+        fields = ('title', 'original_title','overview', 'date', 'director',
+                    'url_poster', 'vote_average', 'url_video', 'budget', 'revenue', 'original_language', 'status', 'runtime')
