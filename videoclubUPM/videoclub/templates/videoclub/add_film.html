@@ -57,9 +57,9 @@
     </nav>
 
     <div class="container-fluid">
-        <form id="edittext">
+        <form id="edittext"  action={% url 'find_filmsAdd' %}>
             <div class="input-group input-group-lg">
-                <input type="text" class="form-control" placeholder="Search film">
+                <input type="text" name="text_search" class="form-control" placeholder="Search film">
                 <div class="input-group-btn">
                     <button class="btn btn-info" type="submit">
                         <i class="glyphicon glyphicon-search"></i>
@@ -68,6 +68,37 @@
             </div>
         </form>
     </div>
+
+    {% block content %}
+    {% if searched %}
+    {% for element in results %}
+    <div class="container-fluid" id="film_info">
+        <div class="row featurette">
+            <div class="col-md-2" style="padding-inline-start: -0%">
+                <div class="container-fluid" style="padding-inline-start: -0%">
+                    <img class="featurette-image img-responsive" src= {{ element.poster_path }} alt="img"/>
+                </div>
+            </div>
+            <div class="col-md-8" style="padding-inline-start: -0%">
+                <div class="container-fluid">
+                    <h1>{{ element.title }}</h1>
+                </div>
+                <div class="container-fluid">
+                    <h4 style="color: #394450">{{ element.date }}</h4>
+                </div>
+                <div class="container-fluid">
+                    <h3>Sypnosis</h3>
+                    <p>{{ element.overview }}</p>
+                </div>
+            </div>
+            <div class="col-md-2 text-center">
+                <a class="btn btn-info btn-lg" href="http://localhost:8000/admin/auth/user/" role="button">Add &raquo;</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endblock %}
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

@@ -18,5 +18,6 @@ urlpatterns = [
     path('film', views.film, name='film'),
     path('newFilm', views.add_film, name='add_film'),
     path('forbidden', views.forbidden, name='forbidden'),
-    path('redirectForbidden', views.redirect_forbidden, name='redirect_forbidden')
+    path('redirectForbidden', views.redirect_forbidden, name='redirect_forbidden'),
+    path('add_film/search', views.find_filmsAdd, name='find_filmsAdd')
 ]

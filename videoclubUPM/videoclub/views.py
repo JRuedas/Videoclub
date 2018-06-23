@@ -9,7 +9,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 
 from . import forms
+import requests
 # Create your views here.
+
+key = "f6093d8fefcd7f83e17a8af193b48d8d"
 
 def index(request):
     context = {}
@@ -160,3 +163,27 @@ def redirect_forbidden(request):
         return redirect("/videoclub/films")
     else:
         return redirect("/videoclub/login")
+
+# https://simpleisbetterthancomplex.com/tutorial/2018/02/03/how-to-use-restful-apis-with-django.html
+def find_filmsAdd(request):
+    context={}
+    
+    if request.method == 'GET':
+        searched = True
+        text = request.GET['text_search']
+        endpoint = 'https://api.themoviedb.org/3/search/movie?api_key={key_id}&query={text_id}'
+        url = endpoint.format(key_id=key, text_id=text)
+        response = requests.get(url)
+        if response.status_code == 200: #SUCCESS
+            search_result = response.json()
+            results = search_result['results']
+
+            for element in results:
+                element['poster_path'] = 'http://image.tmdb.org/t/p/w185//%s' % element['poster_path']
+
+            context = {
+                'searched': searched,
+                'results': results,
+            }
+
+    return render(request, 'videoclub/add_film.html', context)
