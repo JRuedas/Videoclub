@@ -15,11 +15,11 @@ urlpatterns = [
     path('editProfile', views.edit_profile, name='edit_profile'),
     path('changePassword', views.change_password, name='change_password'),
     path('films', views.films, name='films'),
-    path('addfilm', views.add_film, name='add_film'),
     path('newFilm/search', views.find_filmsAdd, name='find_filmsAdd'),
     path('film', views.doSeeMoreToAdd, name='doSeeMoreToAdd'),
     path('film/edit', views.edit_film, name='edit_film'),
     path('newFilm', views.add_film, name='add_film'),
+    path('doAddFilm', views.doAddFilm, name='doAddFilm'),
     path('forbidden', views.forbidden, name='forbidden'),
     path('redirectForbidden', views.redirect_forbidden, name='redirect_forbidden')
 ]

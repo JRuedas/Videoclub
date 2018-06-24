@@ -235,9 +235,25 @@ def doSeeMoreToAdd(request):
 @staff_member_required(login_url='/videoclub/forbidden')
 def doAddFilm(request):
     if request.method == 'POST':
-        film = request.POST['film']
+        film = Movie()
+
+        film.id_movie = request.POST['filmId']
+        film.title = request.POST['title']
+        film.original_title = request.POST['original_title']
+        film.overview = request.POST['overview']
+        film.date = request.POST['release_date']
+        #film.director = models.CharField(max_length=100, null=False)
+        film.url_poster = request.POST['poster_url']
+        film.vote_average = request.POST['vote_average']
+        film.url_video = request.POST['video_url']
+        film.budget = request.POST['budget']
+        film.revenue = request.POST['revenue']
+        film.original_language = request.POST['original_language']
+        film.status = request.POST['status']
+        film.runtime = request.POST['runtime']
+
         film.save()
-        return redirect("/videoclub/login")
+        return redirect("/videoclub/films")
 
 @login_required(login_url='/videoclub/login')
 @staff_member_required(login_url='/videoclub/forbidden')

@@ -79,17 +79,30 @@
             <div class="col-md-2" style="padding-left: 3%">
                 <div class="container-fluid">
                     {% block content %}
-                    <form method="POST" class="post-form" action={% url 'add_film' %}>
+                    <form method="POST" class="post-form" action={% url 'doAddFilm' %}>
                         {% csrf_token %}
                         {{ form.as_p }}
-                        <input type='hidden' name='film' value="{{ film }}"/>
+                        <input type='hidden' name='filmId' value="{{ filmId }}"/>
+                        <input type='hidden' name='title' value="{{ film.title }}"/>
+                        <input type='hidden' name='overview' value="{{ film.overview }}"/>
+                        <input type='hidden' name='video_url' value="{{ film.url_video }}"/>
+                        <input type='hidden' name='poster_url' value="{{ film.url_poster }}"/>
+                        <input type='hidden' name='original_title' value="{{ film.original_title }}"/>
+                        <input type='hidden' name='release_date' value="{{ film.date }}"/>
+                        <input type='hidden' name='original_language' value="{{ film.original_language }}"/>
+                        <input type='hidden' name='runtime' value="{{ film.runtime }}"/>
+                        <input type='hidden' name='budget' value="{{ film.budget }}"/>
+                        <input type='hidden' name='revenue' value="{{ film.revenue }}"/>
+                        <input type='hidden' name='status' value="{{ film.status }}"/>
+                        <input type='hidden' name='vote_average' value="{{ film.vote_average }}"/>
+
                         <input type="submit" value="Add" class="btn btn-default">
                     </form>
 
                     {% endblock %}
                     <h3>Facts</h3>
                     <h5>Original title: </h5> {{ film.original_title }}
-                    <h5>Release date: </h5> {{ film.release_date }}
+                    <h5>Release date: </h5> {{ film.date }}
                     <h5>Original language: </h5> {{ film.original_language }}
                     <h5>Runtime: </h5> {{ film.runtime }} min
                     <h5>Budget: </h5> {{ film.budget }} $
