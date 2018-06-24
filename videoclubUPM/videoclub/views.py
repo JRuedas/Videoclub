@@ -173,11 +173,11 @@ def find_filmsAdd(request):
 
             for element in results:
                 element['poster_path'] = 'http://image.tmdb.org/t/p/w185//%s' % element['poster_path']
-
-            context = {
+                
+        context = {
                 'searched': searched,
                 'results': results,
-            }
+            }        
 
     return render(request, 'videoclub/add_film.html', context)
 
@@ -185,12 +185,14 @@ def find_filmsAdd(request):
 @staff_member_required(login_url='/videoclub/forbidden')
 def doSeeMoreToAdd(request):
     context = {}
-    found = True
+    
     id_movie = request.GET.get('id')
     endpoint_film = 'https://api.themoviedb.org/3/movie/{id_number}?api_key={key_id}'
     url_film = endpoint_film.format(key_id=key, id_number=id_movie)
     response_film = requests.get(url_film)
     if response_film.status_code == 200: #SUCCESS
+        exist = False
+        found = True
         result_film = response_film.json()
         result_film['poster_path'] = 'http://image.tmdb.org/t/p/w500/%s' % result_film['poster_path']
         youtube_video = 'https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0' 
@@ -220,9 +222,14 @@ def doSeeMoreToAdd(request):
         film.status = result_film['status']
         film.runtime = result_film['runtime']
 
+        movies = Movie.objects.filter(id_movie = id_movie)
+
+        if len(movies) > 0:
+            exist = True
         
         context = {
             'found': found,
+            'exist': exist,
             'film': film,
             'filmId': id_movie,
         }
@@ -251,9 +258,9 @@ def doAddFilm(request):
         film.original_language = request.POST['original_language']
         film.status = request.POST['status']
         film.runtime = request.POST['runtime']
-
+        
         film.save()
-        return redirect("/videoclub/films")
+        return redirect("/videoclub/newFilm")
 
 @login_required(login_url='/videoclub/login')
 @staff_member_required(login_url='/videoclub/forbidden')

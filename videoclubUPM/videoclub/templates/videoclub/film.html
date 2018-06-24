@@ -79,6 +79,7 @@
             <div class="col-md-2" style="padding-left: 3%">
                 <div class="container-fluid">
                     {% block content %}
+                    {% if not exist%}
                     <form method="POST" class="post-form" action={% url 'doAddFilm' %}>
                         {% csrf_token %}
                         {{ form.as_p }}
@@ -98,7 +99,9 @@
 
                         <input type="submit" value="Add" class="btn btn-default">
                     </form>
-
+                    {% else %}
+                        <h3> Movie already exists in the DataBase</h3>
+                    {% endif %}
                     {% endblock %}
                     <h3>Facts</h3>
                     <h5>Original title: </h5> {{ film.original_title }}
