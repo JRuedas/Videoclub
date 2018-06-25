@@ -10,7 +10,8 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 from . import forms
 import requests
-from videoclub.models import Movie
+from videoclub.models import Movie, Cast
+import ast
 # Create your views here.
 
 key = "f6093d8fefcd7f83e17a8af193b48d8d"
@@ -169,12 +170,16 @@ def doSeeMore(request):
 
         film = Movie.objects.get(id_movie=id_movie)
         url_poster = 'http://image.tmdb.org/t/p/w500/%s' % film.url_poster   
+
+        cast_list = Cast.objects.prefetch_related('movies').filter(movies=film)
+        
         context = {
             'found': found,
             'exist': exist,
             'film': film,
             'filmId': id_movie,
             'url_poster': url_poster,
+            'cast_list': cast_list
         }
         return render(request, 'videoclub/film.html', context)
     else:
@@ -191,7 +196,7 @@ def doFindFilms(request):
         
         for movie in films:
             movie.url_poster = 'http://image.tmdb.org/t/p/w185/%s' % movie.url_poster 
-        
+
         context = {
             'more_than_zero': more_than_zero,
             'films': films
@@ -263,13 +268,32 @@ def doSeeMoreToAdd(request):
                 first_video = results[0]
                 youtube_video =  'https://www.youtube.com/embed/%s?rel=0' % first_video['key'] 
 
+        endpoint_credits = 'https://api.themoviedb.org/3/movie/{id_number}/credits?api_key={key_id}'
+        url_credits = endpoint_credits.format(key_id=key, id_number=id_movie)
+        response_credits = requests.get(url_credits)
+        if response_credits.status_code == 200: #SUCCESS
+            search_credits = response_credits.json()
+            cast_result = search_credits['cast']
+            crew = search_credits['crew']
+            cast_list=[]
+            director = ''
+            for i in range(5):
+                if cast_result[i]:
+                    cast_aux = cast_result[i]
+                    cast_list.append(cast_aux['name'])
+            
+            for member in crew:
+                if member['job'] == 'Director':
+                    director = member['name']
+                    break
+
         film = Movie()
         film.id_movie = result_film['id']
         film.title = result_film['title']
         film.original_title = result_film['original_title']
         film.overview = result_film['overview']
         film.date = result_film['release_date']
-        film.director = "Director TBI"
+        film.director = director
         film.url_poster = poster_path_aux
         film.vote_average = result_film['vote_average']
         film.url_video = youtube_video
@@ -291,8 +315,9 @@ def doSeeMoreToAdd(request):
             'film': film,
             'filmId': id_movie,
             'url_poster': url_poster,
+            'cast_list': cast_list,
         }
-        url_poster
+  
         return render(request, 'videoclub/film.html', context)
     else:
         return redirect('/videoclub/films')
@@ -310,7 +335,7 @@ def doAddFilm(request):
             film.original_title = request.POST['original_title']
             film.overview = request.POST['overview']
             film.date = request.POST['release_date']
-            #film.director = models.CharField(max_length=100, null=False)
+            film.director = request.POST['director']
             film.url_poster = request.POST['poster_url']
             film.vote_average = request.POST['vote_average']
             film.url_video = request.POST['video_url']
@@ -321,6 +346,16 @@ def doAddFilm(request):
             film.runtime = request.POST['runtime']
         
             film.save()
+
+            cast_list = request.POST['cast_list']
+            cast_aux = ast.literal_eval(cast_list)
+            for member in cast_aux:
+                if Cast.objects.filter(name=member).exists():
+                    Cast.objects.get(name=member).movies.add(film)
+                else:
+                    cast_member = Cast.objects.create(name=member)
+                    cast_member.movies.add(film)
+                    cast_member.save()
 
         return redirect("/videoclub/film?id="+film.id_movie)
 

@@ -100,6 +100,8 @@
                         <input type='hidden' name='revenue' value="{{ film.revenue }}"/>
                         <input type='hidden' name='status' value="{{ film.status }}"/>
                         <input type='hidden' name='vote_average' value="{{ film.vote_average }}"/>
+                        <input type='hidden' name='director' value="{{ film.director }}"/>
+                        <input type='hidden' name='cast_list' value="{{ cast_list }}"/>
 
                         <input type="submit" value="Add" class="btn btn-default">
                     </form>
@@ -123,8 +125,11 @@
                     <h3>Rating</h3> <h5>{{ film.vote_average }}</h5>
                     <br>
                     <h3>Cast</h3>
-                    <h5>Director: </h5> COMPLETAR
-                    <h5>Main: </h5> COMPLETAR
+                    <h5>Director: </h5> {{ film.director }}
+                    <h5>Main: </h5>
+                    {% for member in cast_list %}
+                    <p>{{ member }}</p>
+                    {% endfor%}
                     <br>
                     <br>
                     <br>
