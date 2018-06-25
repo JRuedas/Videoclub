@@ -327,18 +327,17 @@ def doAddFilm(request):
 @login_required(login_url='/videoclub/login')
 @staff_member_required(login_url='/videoclub/forbidden')
 def doDelete(request):
-    if request.method == 'POST':
-        id_movie = request.POST['filmId']
-        if Movie.objects.filter(id_movie=id_movie).exists():
-            Movie.objects.get(id_movie=id_movie).delete()
-        return redirect("/videoclub/film/add?id="+id_movie)
+    id_movie = request.GET.get('filmId')
+    if Movie.objects.filter(id_movie=id_movie).exists():
+        Movie.objects.get(id_movie=id_movie).delete()
+    return redirect("/videoclub/film/add?id="+id_movie)
 
 @login_required(login_url='/videoclub/login')
 @staff_member_required(login_url='/videoclub/forbidden')
 def edit_film(request):
     context = {}
-
-    film = request.GET.get('film')
+    filmId = request.GET.get('filmId')
+    film = Movie.objects.get(id_movie=filmId)
 
     if request.method == 'POST':
         form = forms.EditFilmForm(request.POST, instance=film)
@@ -346,8 +345,6 @@ def edit_film(request):
         if form.is_valid():
             form.save()
             return redirect("/videoclub/films")
-        else:
-            return render(request, "videoclub/edit_film.html", context)
     else:
         form = forms.EditFilmForm(instance=film)
         context = {

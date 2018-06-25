@@ -105,20 +105,8 @@
                     </form>
                     {% else %}
                         <h4> Movie already exists in the DataBase</h4>
-                        <form method="POST" class="post-form" action={% url 'doDelete' %}>
-                            {% csrf_token %}
-                            {{ form.as_p }}
-                            <input type='hidden' name='filmId' value="{{ filmId }}"/>
-                            
-                            <input type="submit" value="Delete" class="btn btn-default">
-                        </form>
-                        <br>
-                        <form method="POST" class="post-form">
-                            {% csrf_token %}
-                            {{ form.as_p }}
-                            <input type='hidden' name='filmId' value="{{ filmId }}"/>
-                            <input type="submit" value="Edit" class="btn btn-default">
-                        </form>
+                        <a href="{% url 'doDeleteFilm' %}?filmId={{ filmId | urlencode }}" class="btn btn-default">Delete</a>
+                        <a href="{% url 'doEditFilm' %}?filmId={{ filmId | urlencode }}" class="btn btn-default">Edit</a>
                     {% endif %}
                     {% endif %}
                     {% endblock %}

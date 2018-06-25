@@ -20,9 +20,10 @@ urlpatterns = [
     path('newFilm/search', views.find_filmsAdd, name='find_filmsAdd'),
     path('film/add', views.doSeeMoreToAdd, name='doSeeMoreToAdd'),
     path('film/edit', views.edit_film, name='edit_film'),
-    path('film/delete', views.doDelete, name='doDelete'),
+    path('film/delete', views.doDelete, name='doDeleteFilm'),
     path('newFilm', views.add_film, name='add_film'),
     path('doAddFilm', views.doAddFilm, name='doAddFilm'),
+    path('doEditFilm', views.edit_film, name='doEditFilm'),
     path('forbidden', views.forbidden, name='forbidden'),
     path('redirectForbidden', views.redirect_forbidden, name='redirect_forbidden')
 ]
