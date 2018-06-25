@@ -11,7 +11,7 @@
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
         crossorigin="anonymous">
-    <link rel="stylesheet" href={% static 'videoclub/css/search_film.css' %}>
+    <link rel="stylesheet" href={% static 'videoclub/css/add_film.css' %}>
 </head>
 
 <body>
@@ -71,17 +71,17 @@
     {% for element in results %}
     <div class="container-fluid" id="film_info">
         <div class="row featurette">
-            <div class="col-md-2" style="padding-inline-start: -0%">
-                <div class="container-fluid" style="padding-inline-start: -0%">
+            <div class="col-md-2 paddingStart">
+                <div class="container-fluid paddingStart">
                     <img class="featurette-image img-responsive" src= {{ element.poster_path }} alt="img"/>
                 </div>
             </div>
-            <div class="col-md-8" style="padding-inline-start: -0%">
+            <div class="col-md-8 paddingStart">
                 <div class="container-fluid">
                     <h1>{{ element.title }}</h1>
                 </div>
                 <div class="container-fluid">
-                    <h4 style="color: #394450">{{ element.release_date }}</h4>
+                    <h4 class="dateColor">{{ element.release_date }}</h4>
                 </div>
                 <div class="container-fluid">
                     <h3>Overview</h3>

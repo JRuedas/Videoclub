@@ -1,6 +1,5 @@
 from django.urls import path
 from django.conf.urls import url
-
 from . import views
 
 urlpatterns = [
@@ -23,7 +22,7 @@ urlpatterns = [
     path('film/delete', views.doDelete, name='doDeleteFilm'),
     path('newFilm', views.add_film, name='add_film'),
     path('doAddFilm', views.doAddFilm, name='doAddFilm'),
-    path('doEditFilm', views.edit_film, name='doEditFilm'),
+    path('editFilm', views.edit_film, name='doEditFilm'),
     path('forbidden', views.forbidden, name='forbidden'),
     path('redirectForbidden', views.redirect_forbidden, name='redirect_forbidden')
 ]

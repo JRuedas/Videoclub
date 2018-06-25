@@ -21,6 +21,10 @@ body{
     float: right!important;
 }
 
+.paddingLeft {
+    padding-left: 3%
+}
+
 .footerPadding {
     padding-top: 20px;
 }
