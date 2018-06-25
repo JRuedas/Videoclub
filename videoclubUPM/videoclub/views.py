@@ -142,6 +142,61 @@ def change_password(request):
 @login_required(login_url='/videoclub/login')
 def films(request):
     context = {}
+
+    films = Movie.objects.all()
+    more_than_zero = False
+    for movie in films:
+        more_than_zero = True
+        movie.url_poster = 'http://image.tmdb.org/t/p/w185/%s' % movie.url_poster
+    
+    context = {
+        'more_than_zero': more_than_zero,
+        'films': films
+    } 
+
+    return render(request, "videoclub/films.html", context)
+
+@login_required(login_url='/videoclub/login')
+def doSeeMore(request):
+    context = {}
+    if request.method == 'GET':
+        id_movie = request.GET.get('id')
+        found = True
+        exist = True
+
+        if not Movie.objects.filter(id_movie=id_movie).exists():
+            return redirect('/videoclub/films')
+
+        film = Movie.objects.get(id_movie=id_movie)
+        url_poster = 'http://image.tmdb.org/t/p/w500/%s' % film.url_poster   
+        context = {
+            'found': found,
+            'exist': exist,
+            'film': film,
+            'filmId': id_movie,
+            'url_poster': url_poster,
+        }
+        return render(request, 'videoclub/film.html', context)
+    else:
+        return redirect('/videoclub/films')
+
+@login_required(login_url='/videoclub/login')
+def doFindFilms(request):
+    context = {}
+    
+    if request.method == 'GET':
+        text = request.GET['text_search']
+        films = list(Movie.objects.raw('SELECT * FROM videoclub_movie WHERE title LIKE \'%'+text+'%\''))
+        more_than_zero = True
+        
+        for movie in films:
+            movie.url_poster = 'http://image.tmdb.org/t/p/w185/%s' % movie.url_poster 
+        
+        context = {
+            'more_than_zero': more_than_zero,
+            'films': films
+        } 
+        
     return render(request, "videoclub/films.html", context)
 
 @login_required(login_url='/videoclub/login')
@@ -172,7 +227,7 @@ def find_filmsAdd(request):
             results = search_result['results']
 
             for element in results:
-                element['poster_path'] = 'http://image.tmdb.org/t/p/w185//%s' % element['poster_path']
+                element['poster_path'] = 'http://image.tmdb.org/t/p/w185/%s' % element['poster_path']
                 
         context = {
                 'searched': searched,
@@ -194,6 +249,7 @@ def doSeeMoreToAdd(request):
         exist = False
         found = True
         result_film = response_film.json()
+        poster_path_aux = result_film['poster_path']
         result_film['poster_path'] = 'http://image.tmdb.org/t/p/w500/%s' % result_film['poster_path']
         youtube_video = 'https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0' 
 
@@ -208,12 +264,13 @@ def doSeeMoreToAdd(request):
                 youtube_video =  'https://www.youtube.com/embed/%s?rel=0' % first_video['key'] 
 
         film = Movie()
+        film.id_movie = result_film['id']
         film.title = result_film['title']
         film.original_title = result_film['original_title']
         film.overview = result_film['overview']
         film.date = result_film['release_date']
         film.director = "Director TBI"
-        film.url_poster = result_film['poster_path']
+        film.url_poster = poster_path_aux
         film.vote_average = result_film['vote_average']
         film.url_video = youtube_video
         film.budget = result_film['budget']
@@ -221,10 +278,11 @@ def doSeeMoreToAdd(request):
         film.original_language = result_film['original_language']
         film.status = result_film['status']
         film.runtime = result_film['runtime']
+        url_poster = result_film['poster_path']
 
-        movies = Movie.objects.filter(id_movie = id_movie)
+        movies = Movie.objects.filter(id_movie=id_movie)
 
-        if len(movies) > 0:
+        if movies:
             exist = True
         
         context = {
@@ -232,8 +290,9 @@ def doSeeMoreToAdd(request):
             'exist': exist,
             'film': film,
             'filmId': id_movie,
+            'url_poster': url_poster,
         }
-        
+        url_poster
         return render(request, 'videoclub/film.html', context)
     else:
         return redirect('/videoclub/films')
@@ -245,22 +304,34 @@ def doAddFilm(request):
         film = Movie()
 
         film.id_movie = request.POST['filmId']
-        film.title = request.POST['title']
-        film.original_title = request.POST['original_title']
-        film.overview = request.POST['overview']
-        film.date = request.POST['release_date']
-        #film.director = models.CharField(max_length=100, null=False)
-        film.url_poster = request.POST['poster_url']
-        film.vote_average = request.POST['vote_average']
-        film.url_video = request.POST['video_url']
-        film.budget = request.POST['budget']
-        film.revenue = request.POST['revenue']
-        film.original_language = request.POST['original_language']
-        film.status = request.POST['status']
-        film.runtime = request.POST['runtime']
+
+        if not Movie.objects.filter(id_movie=film.id_movie).exists():
+            film.title = request.POST['title']
+            film.original_title = request.POST['original_title']
+            film.overview = request.POST['overview']
+            film.date = request.POST['release_date']
+            #film.director = models.CharField(max_length=100, null=False)
+            film.url_poster = request.POST['poster_url']
+            film.vote_average = request.POST['vote_average']
+            film.url_video = request.POST['video_url']
+            film.budget = request.POST['budget']
+            film.revenue = request.POST['revenue']
+            film.original_language = request.POST['original_language']
+            film.status = request.POST['status']
+            film.runtime = request.POST['runtime']
         
-        film.save()
-        return redirect("/videoclub/newFilm")
+            film.save()
+
+        return redirect("/videoclub/film?id="+film.id_movie)
+
+@login_required(login_url='/videoclub/login')
+@staff_member_required(login_url='/videoclub/forbidden')
+def doDelete(request):
+    if request.method == 'POST':
+        id_movie = request.POST['filmId']
+        if Movie.objects.filter(id_movie=id_movie).exists():
+            Movie.objects.get(id_movie=id_movie).delete()
+        return redirect("/videoclub/film/add?id="+id_movie)
 
 @login_required(login_url='/videoclub/login')
 @staff_member_required(login_url='/videoclub/forbidden')

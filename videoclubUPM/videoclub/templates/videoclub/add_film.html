@@ -29,10 +29,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                                <a href={% url 'list_users' %}>List users</a>
-                            </li>
-                            <li>
-                                <a href={% url 'films' %}>Films</a>
+                            <a href={% url 'list_users' %}>List users</a>
                         </li>
                     </ul>
                 </li>
@@ -84,7 +81,7 @@
                     <h1>{{ element.title }}</h1>
                 </div>
                 <div class="container-fluid">
-                    <h4 style="color: #394450">{{ element.date }}</h4>
+                    <h4 style="color: #394450">{{ element.release_date }}</h4>
                 </div>
                 <div class="container-fluid">
                     <h3>Overview</h3>
@@ -92,6 +89,9 @@
                 </div>
             </div>
             <div class="col-md-2 text-center">
+                <div class="container-fluid">
+                    <h3>Vote Average: {{ element.vote_average }}</h3>
+                </div>
                 <a class="btn btn-info btn-lg" href="{% url 'doSeeMoreToAdd' %}?id={{ element.id | urlencode }}" role="button">See more &raquo;</a>
             </div>
         </div>

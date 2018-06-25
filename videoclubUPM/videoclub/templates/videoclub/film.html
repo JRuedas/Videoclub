@@ -41,6 +41,9 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li>
+                            <a href={% url 'edit_profile' %}>Edit profile</a>
+                        </li>
+                        <li>
                             <a href={% url 'change_password' %}>Change password</a>
                         </li>
                     </ul>
@@ -57,7 +60,7 @@
         <div class="row featurette">
             <div class="col-md-4">
                 <div class="container-fluid">
-                    <img class="featurette-image img-responsive" src={{ film.url_poster }} alt="img" />
+                    <img class="featurette-image img-responsive" src={{ url_poster }} alt="img" />
                 </div>
             </div>
             <div class="col-md-6">
@@ -79,6 +82,7 @@
             <div class="col-md-2" style="padding-left: 3%">
                 <div class="container-fluid">
                     {% block content %}
+                    {% if user.is_staff %}
                     {% if not exist%}
                     <form method="POST" class="post-form" action={% url 'doAddFilm' %}>
                         {% csrf_token %}
@@ -100,7 +104,22 @@
                         <input type="submit" value="Add" class="btn btn-default">
                     </form>
                     {% else %}
-                        <h3> Movie already exists in the DataBase</h3>
+                        <h4> Movie already exists in the DataBase</h4>
+                        <form method="POST" class="post-form" action={% url 'doDelete' %}>
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <input type='hidden' name='filmId' value="{{ filmId }}"/>
+                            
+                            <input type="submit" value="Delete" class="btn btn-default">
+                        </form>
+                        <br>
+                        <form method="POST" class="post-form">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <input type='hidden' name='filmId' value="{{ filmId }}"/>
+                            <input type="submit" value="Edit" class="btn btn-default">
+                        </form>
+                    {% endif %}
                     {% endif %}
                     {% endblock %}
                     <h3>Facts</h3>
@@ -116,7 +135,7 @@
                     <h3>Rating</h3> <h5>{{ film.vote_average }}</h5>
                     <br>
                     <h3>Cast</h3>
-                    <h5>Directors: </h5> COMPLETAR
+                    <h5>Director: </h5> COMPLETAR
                     <h5>Main: </h5> COMPLETAR
                     <br>
                     <br>
