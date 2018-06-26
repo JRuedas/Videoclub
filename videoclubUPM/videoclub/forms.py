@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django.forms import ModelForm
 from videoclub.models import Movie
+from django import forms
 
 class CreateUserForm(UserCreationForm):
     class Meta:
@@ -31,6 +32,7 @@ class EditProfileForm(UserChangeForm):
         }
 
 class EditFilmForm(ModelForm):
+    overview = forms.CharField(widget=forms.Textarea)
     class Meta:
         model = Movie
         fields = ('title', 'original_title','overview', 'date', 'director',
