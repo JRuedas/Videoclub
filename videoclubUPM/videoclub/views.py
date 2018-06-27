@@ -7,7 +7,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-
 from . import forms
 import requests
 from videoclub.models import Movie, Cast
@@ -58,7 +57,6 @@ def create_user(request):
     form = forms.CreateUserForm(request.POST)
 
     if request.method == 'POST':
-
         form = forms.CreateUserForm(request.POST)
 
         if form.is_valid():
@@ -76,7 +74,6 @@ def modify_user(request):
     user = User.objects.get_by_natural_key(username)
 
     if request.method == 'POST':
-
         form = forms.UserUpdateForm(request.POST, instance=user)
 
         if form.is_valid():
@@ -104,7 +101,6 @@ def edit_profile(request):
     user = request.user
 
     if request.method == 'POST':
-
         form = forms.EditProfileForm(request.POST, instance=user)
 
         if form.is_valid():
@@ -123,7 +119,6 @@ def change_password(request):
     user = request.user
 
     if request.method == 'POST':
-
         form = PasswordChangeForm(data=request.POST, user=user)
 
         if form.is_valid():
