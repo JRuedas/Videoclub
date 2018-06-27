@@ -35,7 +35,7 @@ def doLogin (request):
             return redirect("/videoclub/films")
         else:
             messages.error(request,'Incorrect user or password')
-            return redirect("/videoclub/login")
+            return redirect("/videoclub/")
 
 @login_required(login_url='/videoclub/login')
 def doLogout (request):
