@@ -251,7 +251,7 @@ def doSeeMoreToAdd(request):
         result_film = response_film.json()
         poster_path_aux = result_film['poster_path']
         result_film['poster_path'] = 'http://image.tmdb.org/t/p/w500/%s' % result_film['poster_path']
-        youtube_video = 'https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0' 
+        youtube_video = 'https://www.youtube.com/embed/KolfEhV-KiA?rel=0' 
 
         endpoint_video = 'https://api.themoviedb.org/3/movie/{id_number}/videos?api_key={key_id}'
         url_video = endpoint_video.format(key_id=key, id_number=id_movie)
@@ -272,11 +272,16 @@ def doSeeMoreToAdd(request):
             crew = search_credits['crew']
             cast_list=[]
             director = ''
-            for i in range(5):
-                if cast_result[i]:
-                    cast_aux = cast_result[i]
+            if len(cast_result) > 5:
+                for i in range(5):
+                    if cast_result[i]:
+                        cast_aux = cast_result[i]
+                        cast_list.append(cast_aux['name'])
+            else:
+                for member in cast_result:
+                    cast_aux = member
                     cast_list.append(cast_aux['name'])
-            
+         
             for member in crew:
                 if member['job'] == 'Director':
                     director = member['name']
