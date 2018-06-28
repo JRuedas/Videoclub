@@ -1,5 +1,5 @@
 body{
-    background-color: #c6c6c6;
+    background-color: #f3f3f3;
 }
 
 .customNavbar {
@@ -11,6 +11,10 @@ body{
     float: right!important;
 }
 
+#edittext {
+    padding-top: 1%
+}
+
 .paddingStart {
     padding-inline-start: -0%
 }
@@ -19,14 +23,7 @@ body{
     color: #394450
 }
 
-#edittext {
-    padding-top: 1%
-}
-
-#film_info{
-    margin-inline-end: 2%;
-    margin-inline-start: 2%;
-    margin-block-end: 1%;
-    margin-block-start: 1%;
-    background: #f3f3f3;
+a.list-group-item {
+    height:auto;
+    min-height:300px;
 }

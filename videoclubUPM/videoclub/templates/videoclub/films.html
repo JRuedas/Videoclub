@@ -11,6 +11,7 @@
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
         crossorigin="anonymous">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href={% static 'videoclub/css/films.css' %}>
 </head>
 
@@ -56,52 +57,48 @@
             </ul>
     </nav>
 
-    <div class="container-fluid">
-        <form id="edittext"  action={% url 'doFindFilms' %}>
-            <div class="input-group input-group-lg">
-                <input type="text" name="text_search" class="form-control" placeholder="Search film">
-                <div class="input-group-btn">
-                    <button class="btn btn-info" type="submit">
-                        <i class="glyphicon glyphicon-search"></i>
-                    </button>
-                </div>
-            </div>
-        </form>
-    </div>
-
-    {% block content %}
-    {% if more_than_zero %}
-    {% for element in films %}
     <div class="container-fluid" id="film_info">
-        <div class="row featurette">
-            <div class="col-md-2 paddingStart">
-                <div class="container-fluid paddingStart">
-                    <img class="featurette-image img-responsive" src= {{ element.url_poster }} alt="img"/>
+        <div class="container-fluid" style="padding-block-end: 1%">
+            <form id="edittext" action={% url 'doFindFilms' %}>
+                <div class="input-group input-group-lg">
+                    <input type="text" name="text_search" class="form-control" placeholder="Search film">
+                    <div class="input-group-btn">
+                        <button class="btn btn-info" type="submit">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-8 paddingStart">
-                <div class="container-fluid">
-                    <h1>{{ element.title }}</h1>
-                </div>
-                <div class="container-fluid">
-                    <h4 class="dateColor">{{ element.date }}</h4>
-                </div>
-                <div class="container-fluid">
-                    <h3>Overview</h3>
-                    <p>{{ element.overview }}</p>
-                </div>
-            </div>
-            <div class="col-md-2 text-center">
-                <div class="container-fluid">
-                    <h3>Vote Average: {{ element.vote_average }}</h3>
-                </div>
-                <a class="btn btn-info btn-lg" href="{% url 'doSeeMore' %}?id={{ element.id_movie | urlencode }}" role="button">See more &raquo;</a>
-            </div>
+            </form>
         </div>
+        {% block content %} 
+        {% if more_than_zero %} 
+        {% for element in films %}
+        <div class="list-group">
+            <div class="list-group-item container-fluid">
+                <div class="media col-md-2">
+                    <figure class="pull-left">
+                        <img class="featurette-image img-rounded img-responsive" src={{ element.url_poster }} alt="img" />
+                    </figure>
+                </div>
+                <div class="col-md-7">
+                    <h1 class="list-group-item-heading"> {{ element.title }} </h1>
+                    <h4 class="list-group-item-text dateColor">{{ element.date }}</h4>
+                    <h3 class="list-group-item-text">Overview</h3>
+                    <p class="list-group-item-text">{{ element.overview }}</p>
+                </div>
+                <div class="col-md-3 text-center">
+                    <h3>Average: {{ element.vote_average }}</h3>
+                    <a type="button" class="btn btn-primary btn-lg btn-block" href="{% url 'doSeeMore' %}?id={{ element.id_movie | urlencode }}"
+                        role="button" style="margin-block-start: 5%">See more</a>
+                </div>
+            </div>
+   
+        </div>
+        {% endfor %} 
+        {% endif %} 
+        {% endblock %}
     </div>
-    {% endfor %}
-    {% endif %}
-    {% endblock %}
+    
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
