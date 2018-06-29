@@ -82,15 +82,15 @@
                     </figure>
                 </div>
                 <div class="col-md-7">
-                    <h1 class="list-group-item-heading"> {{ element.title }} </h1>
+                    <h1 class="list-group-item-heading bold"> {{ element.title }} </h1>
                     <h4 class="list-group-item-text dateColor">{{ element.date }}</h4>
-                    <h3 class="list-group-item-text">Overview</h3>
+                    <h3 class="list-group-item-text bold">Overview</h3>
                     <p class="list-group-item-text">{{ element.overview }}</p>
                 </div>
                 <div class="col-md-3 text-center">
-                    <h3>Average: {{ element.vote_average }}</h3>
-                    <a type="button" class="btn btn-primary btn-lg btn-block" href="{% url 'doSeeMore' %}?id={{ element.id_movie | urlencode }}"
-                        role="button" style="margin-block-start: 5%">See more</a>
+                    <h3>Average: </h3><h3 class="bold">{{ element.vote_average }}</h3>
+                    <a type="button" class="btn btn-primary btn-lg btn-block margin-see-more" href="{% url 'doSeeMore' %}?id={{ element.id_movie | urlencode }}"
+                        role="button">See more</a>
                 </div>
             </div>
    

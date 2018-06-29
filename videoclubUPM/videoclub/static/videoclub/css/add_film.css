@@ -16,15 +16,19 @@ body{
     padding-top: 1%
 }
 
-.paddingStart {
-    padding-inline-start: -0%
-}
-
 .dateColor {
     color: #394450
+}
+
+.bold{
+    font-weight: bold
 }
 
 a.list-group-item {
     height:auto;
     min-height:300px;
+}
+
+.margin-see-more{
+    margin-block-start: 4%
 }
