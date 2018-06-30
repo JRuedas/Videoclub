@@ -15,44 +15,50 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-inverse customNavbar">
+    <nav class="navbar navbar-default navbar-inverse customNavbar" role="navigation">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <a class="navbar-brand" href={% url 'films' %}>Videoclub Online UPM</a>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href={% url 'index' %}>Videoclub Online UPM</a>
             </div>
-            <ul class="nav navbar-nav navbar-right">
-                {% if user.is_authenticated %}
-                <li class="profile">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href={% url 'edit_profile' %}>Edit profile</a>
-                        </li>
-                        <li>
-                            <a href={% url 'change_password' %}>Change password</a>
-                        </li>
-                    </ul>
-                </li>
-                {% endif %}
-                <li>
-                    <a href={% url 'doLogout' %}>Logout</a>
-                </li>
-            </ul>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    {% if user.is_authenticated %}
+                    <li class="profile">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href={% url 'edit_profile' %}>Edit profile</a>
+                            </li>
+                            <li>
+                                <a href={% url 'change_password' %}>Change password</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href={% url 'doLogout' %}>Logout</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div> <!-- /.navbar-collapse -->
+        </div> <!-- /.container-fluid -->
     </nav>
 
-    <div class="error-template">
-        <h1>
-            Oops!</h1>
-        <h2>
-            403 Forbidden</h2>
-        <div class="error-details">
-            You're trying to do something nasty, better luck next time!
-        </div>
-        <div class="error-actions">
-            <a href={% url 'redirect_forbidden' %} class="btn btn-primary"><span class="glyphicon glyphicon-home"></span>Go to index </a>
+    <div class="container-fluid">
+        <div class="jumbotron">
+            <h1 class="text-center">403 Forbidden<p> </p><p><small class="text-center"> You're trying to do something nasty, better luck next time!</small></p></h1>
+            <p class="text-center">Try pressing the back button or clicking on this button.</p>
+            <p class="text-center"><a class="btn btn-primary" href={% url 'redirect_forbidden' %}><i class="fa fa-home"></i>Go to home</a></p>
         </div>
     </div>
 

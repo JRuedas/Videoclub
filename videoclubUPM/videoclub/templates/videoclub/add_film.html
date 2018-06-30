@@ -17,85 +17,98 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-inverse customNavbar">
+    <nav class="navbar navbar-default navbar-inverse customNavbar" role="navigation">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
                 <a class="navbar-brand" href={% url 'films' %}>Videoclub Online UPM</a>
             </div>
-            <ul class="nav navbar-nav navbar-right">
-                {% if user.is_staff %}
-                <li class="admin">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href={% url 'list_users' %}>List users</a>
-                        </li>
-                    </ul>
-                </li>
-                {% endif %}
-                <li class="profile">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href={% url 'edit_profile' %}>Edit profile</a>
-                        </li>
-                        <li>
-                            <a href={% url 'change_password' %}>Change password</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href={% url 'doLogout' %}>Logout</a>
-                </li>
-            </ul>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    {% if user.is_staff %}
+                    <li class="admin">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href={% url 'list_users' %}>List users</a>
+                            </li>
+                        </ul>
+                    </li>
+                    {% endif %}
+                    <li class="profile">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                    <a href={% url 'edit_profile' %}>Edit profile</a>
+                            </li>
+                            <li>
+                                <a href={% url 'change_password' %}>Change password</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href={% url 'doLogout' %}>Logout</a>
+                    </li>
+                </ul>
+            </div> <!-- /.navbar-collapse -->
+        </div> <!-- /.container-fluid -->
     </nav>
 
     <div class="container-fluid" id="film_info">
-        <div class="container-fluid text-center"><h1 class="bold">Add Films</h1></div> 
-            <div class="container-fluid" style="padding-block-end: 1%">
-                <form id="edittext" action={% url 'find_filmsAdd' %}>
-                    <div class="input-group input-group-lg">
-                        <input type="text" name="text_search" class="form-control" placeholder="Search film">
-                        <div class="input-group-btn">
-                            <button class="btn btn-info" type="submit">
-                                <i class="glyphicon glyphicon-search"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            {% block content %} 
-            {% if searched %} 
-            {% for element in results %}
-            <div class="list-group">
-                <div class="list-group-item container-fluid">
-                    <div class="media col-md-2">
-                        <figure class="pull-left">
-                            <img class="featurette-image img-rounded img-responsive" src={{ element.poster_path }} alt="img" />
-                        </figure>
-                    </div>
-                    <div class="col-md-7">
-                        <h1 class="list-group-item-heading bold"> {{ element.title }} </h1>
-                        <h4 class="list-group-item-text dateColor">{{ element.release_date }}</h4>
-                        <h3 class="list-group-item-text bold">Overview</h3>
-                        <p class="list-group-item-text">{{ element.overview }}</p>
-                    </div>
-                    <div class="col-md-3 text-center">
-                        <h3>Average: </h3><h3 class="bold">{{ element.vote_average }}</h3>
-                        <a type="button" class="btn btn-primary btn-lg btn-block margin-see-more" href="{% url 'doSeeMoreToAdd' %}?id={{ element.id | urlencode }}"
-                            role="button">See more</a>
+        <div class="container-fluid text-center">
+            <h1 class="bold">Add Films</h1>
+        </div> 
+        <div class="container-fluid" style="padding-block-end: 1%">
+            <form id="edittext" action={% url 'find_filmsAdd' %}>
+                <div class="input-group input-group-lg">
+                    <input type="text" name="text_search" class="form-control" placeholder="Search film">
+                    <div class="input-group-btn">
+                        <button class="btn btn-info" type="submit">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
                     </div>
                 </div>
-       
+            </form>
+        </div>
+        {% block content %} 
+        {% if searched %} 
+        {% for element in results %}
+        <div class="list-group">
+            <div class="list-group-item container-fluid">
+                <div class="media col-md-2">
+                    <figure class="pull-left">
+                        <img class="featurette-image img-rounded img-responsive" src={{ element.poster_path }} alt="img" />
+                    </figure>
+                </div>
+                <div class="col-md-7">
+                    <h1 class="list-group-item-heading bold"> {{ element.title }} </h1>
+                    <h4 class="list-group-item-text dateColor">{{ element.release_date }}</h4>
+                    <h3 class="list-group-item-text bold">Overview</h3>
+                    <p class="list-group-item-text">{{ element.overview }}</p>
+                </div>
+                <div class="col-md-3 text-center">
+                    <h3>Average: </h3><h3 class="bold">{{ element.vote_average }}</h3>
+                    <a type="button" class="btn btn-primary btn-lg btn-block margin-see-more" href="{% url 'doSeeMoreToAdd' %}?id={{ element.id | urlencode }}"
+                        role="button">See more</a>
+                </div>
             </div>
-            {% endfor %} 
-            {% endif %} 
-            {% endblock %}
+    
+        </div>
+        {% endfor %} 
+        {% endif %} 
+        {% endblock %}
     </div>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

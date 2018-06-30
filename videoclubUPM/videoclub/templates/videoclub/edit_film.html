@@ -71,7 +71,7 @@
     <div class='container'>
         {% block content %}
         <h1>Edit Film</h1>
-        <form method="POST" class="post-form"   >
+        <form method="POST" class="post-form">
             {% csrf_token %}
             {{ form.as_p }}
 
