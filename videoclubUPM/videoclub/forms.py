@@ -29,7 +29,7 @@ class EditProfileForm(UserChangeForm):
             'class': 'form-control'
         }
     ))
-    
+
     first_name = forms.CharField(required=False,label='First name',widget=forms.TextInput(
         attrs={
             'class': 'form-control'
@@ -82,7 +82,88 @@ class EditPasswordForm(PasswordChangeForm):
         model = User
 
 class EditFilmForm(ModelForm):
-    overview = forms.CharField(widget=forms.Textarea)
+    title = forms.CharField(label='Title',widget=forms.TextInput(
+        attrs={
+            'class': 'form-control'
+        }
+    ))
+
+    original_title = forms.CharField(label='Original title',widget=forms.TextInput(
+        attrs={
+            'class': 'form-control'
+        }
+    ))
+
+    overview = forms.CharField(label='Overview',widget=forms.Textarea(
+        attrs={
+            'class': 'form-control'
+        }
+    ))
+
+    date = forms.DateField(label='Release date',widget=forms.DateInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'YYYY-MM-DD'
+        }
+    ))
+
+    director = forms.CharField(label='Director',widget=forms.TextInput(
+        attrs={
+            'class': 'form-control'
+        }
+    ))
+
+    url_poster = forms.CharField(label='URL Poster',widget=forms.TextInput(
+        attrs={
+            'class': 'form-control'
+        }
+    ))
+
+    vote_average = forms.DecimalField(label='Vote average',widget=forms.NumberInput(
+        attrs={
+            'class': 'form-control',
+            'step': 0.1,
+            'min': '0.00',
+            'max': '10.00'
+        }
+    ))
+
+    url_video = forms.CharField(label='URL video',widget=forms.TextInput(
+        attrs={
+            'class': 'form-control'
+        }
+    ))
+
+    budget = forms.FloatField(label='Budget',widget=forms.NumberInput(
+        attrs={
+            'class': 'form-control'
+        }
+    ))
+
+    revenue = forms.FloatField(label='Revenue',widget=forms.NumberInput(
+        attrs={
+            'class': 'form-control'
+        }
+    ))
+
+    original_language = forms.CharField(label='Original language',widget=forms.TextInput(
+        attrs={
+            'class': 'form-control'
+        }
+    ))
+
+    status = forms.CharField(label='Status',widget=forms.TextInput(
+        attrs={
+            'class': 'form-control'
+        }
+    ))
+
+    runtime = forms.IntegerField(label='Rutime',widget=forms.NumberInput(
+        attrs={
+            'class': 'form-control'
+        }
+    ))
+
     class Meta:
         model = Movie
         fields = ('title', 'original_title','overview', 'date', 'director',

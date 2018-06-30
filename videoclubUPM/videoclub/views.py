@@ -384,6 +384,9 @@ def edit_film(request):
         if form.is_valid():
             form.save()
             return redirect("/videoclub/films")
+        else:
+            messages.error(request,'Tiene un error en el formulario')
+            return redirect("/videoclub/editFilm?filmId="+filmId)
     else:
         form = forms.EditFilmForm(instance=film)
         context = {
