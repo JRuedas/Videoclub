@@ -5,6 +5,32 @@ from videoclub.models import Movie
 from django import forms
 
 class CreateUserForm(UserCreationForm):
+    username = forms.CharField(required=True,label='Username',widget=forms.TextInput(
+        attrs={
+            'class': 'form-control'
+        }
+    ))
+
+    email = forms.CharField(required=True,label='Email',widget=forms.EmailInput(
+        attrs={
+            'class': 'form-control'
+        }
+    ))
+
+    password1 = forms.CharField(required=True,label='Password',widget=forms.PasswordInput(
+        attrs={
+            'class': 'form-control'
+        }
+    ))
+
+    password2 = forms.CharField(required=True,label='Confirm password',widget=forms.PasswordInput(
+        attrs={
+            'class': 'form-control'
+        }
+    ))
+
+    is_staff = forms.BooleanField(required=False,label="Is admin?", widget=forms.CheckboxInput())
+
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2', 'is_staff')
