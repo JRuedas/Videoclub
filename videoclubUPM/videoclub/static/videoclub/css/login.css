@@ -28,3 +28,11 @@ body, html{
     background-position: center;
     background-size: cover;
 }
+
+.centered {
+    position: fixed;
+    top: 50%;
+    left: 65%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -65%);
+  }
