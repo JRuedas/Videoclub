@@ -41,6 +41,39 @@ class CreateUserForm(UserCreationForm):
         }
 
 class UserUpdateForm(UserChangeForm):
+    username = forms.CharField(required=True,label='Username',widget=forms.TextInput(
+        attrs={
+            'class': 'form-control'
+        }
+    ))
+
+    first_name = forms.CharField(required=False,label='First name',widget=forms.TextInput(
+        attrs={
+            'class': 'form-control'
+        }
+    ))
+    
+    last_name = forms.CharField(required=False,label='Last name',widget=forms.TextInput(
+        attrs={
+            'class': 'form-control'
+        }
+    ))
+
+    email = forms.CharField(required=True,label='Email',widget=forms.EmailInput(
+        attrs={
+            'class': 'form-control'
+        }
+    ))
+
+    password = forms.CharField(label='Password',widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'type': 'hidden'
+        }
+    ))
+
+    is_staff = forms.BooleanField(required=False,label="Is admin?", widget=forms.CheckboxInput())
+
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password', 'is_staff')

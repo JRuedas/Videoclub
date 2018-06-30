@@ -79,6 +79,9 @@ def modify_user(request):
         if form.is_valid():
             form.save()            
             return redirect("/videoclub/users")
+        else:
+            messages.error(request,'Username already exists')
+            return redirect("/videoclub/changeUser?username="+username)
     else:
         form = forms.UserUpdateForm(instance=user)
         context = {
