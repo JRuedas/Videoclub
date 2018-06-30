@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserChangeForm, UserCreationForm
+from django.contrib.auth.forms import UserChangeForm, UserCreationForm, PasswordChangeForm
 from django.forms import ModelForm
 from videoclub.models import Movie
 from django import forms
@@ -30,6 +30,25 @@ class EditProfileForm(UserChangeForm):
         help_texts = {
             'username': ''
         }
+
+class EditPasswordForm(PasswordChangeForm):
+    old_password = forms.CharField(required=True,label='Old password',widget=forms.PasswordInput(
+        attrs={
+            'class': 'form-control'
+        }
+    ))
+    new_password1 = forms.CharField(required=True,label='New password',widget=forms.PasswordInput(
+        attrs={
+            'class': 'form-control'
+        }
+    ))
+    new_password2 = forms.CharField(required=True,label='Confirm new password',widget=forms.PasswordInput(
+        attrs={
+            'class': 'form-control'
+        }
+    ))
+    class Meta:
+        model = User
 
 class EditFilmForm(ModelForm):
     overview = forms.CharField(widget=forms.Textarea)

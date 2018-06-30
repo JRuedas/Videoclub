@@ -119,16 +119,17 @@ def change_password(request):
     user = request.user
 
     if request.method == 'POST':
-        form = PasswordChangeForm(data=request.POST, user=user)
+        form = forms.EditPasswordForm(data=request.POST, user=user)
 
         if form.is_valid():
             form.save()
             update_session_auth_hash(request, form.user)            
             return redirect("/videoclub/films")
         else:
-            return redirect('/videoclub/changePassword ')
+            messages.error(request,'Incorrect password')
+            return redirect('/videoclub/changePassword')
     else:
-        form = PasswordChangeForm(user=user)
+        form = forms.EditPasswordForm(user=user)
         context = {
             'form': form,
             "user" : user
