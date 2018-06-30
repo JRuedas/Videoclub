@@ -106,6 +106,9 @@ def edit_profile(request):
         if form.is_valid():
             form.save()
             return redirect("/videoclub/films")
+        else:
+            messages.error(request,'Username already exists')
+            return redirect("/videoclub/editProfile")
     else:
         form = forms.EditProfileForm(instance=user)
         context = {
