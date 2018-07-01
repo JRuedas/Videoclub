@@ -2,15 +2,15 @@ from django.shortcuts import render, redirect
 from django.template import loader
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.models import User
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
+from videoclub.models import Movie, Cast
 from . import forms
 import requests
-from videoclub.models import Movie, Cast
 import ast
+
 # Create your views here.
 
 key = "f6093d8fefcd7f83e17a8af193b48d8d"
