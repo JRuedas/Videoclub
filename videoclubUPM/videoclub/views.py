@@ -195,13 +195,13 @@ def doFindFilms(request):
         text = request.GET['text_search']
         films = list(Movie.objects.raw('SELECT * FROM videoclub_movie WHERE title LIKE \'%'+text+'%\''))
         more_than_zero = True
-        
+
         for movie in films:
             movie.url_poster = 'http://image.tmdb.org/t/p/w185/%s' % movie.url_poster 
 
         context = {
             'more_than_zero': more_than_zero,
-            'films': films
+            'films': films,
         } 
         
     return render(request, "videoclub/films.html", context)
@@ -351,6 +351,12 @@ def doAddFilm(request):
             film.original_language = request.POST['original_language']
             film.status = request.POST['status']
             film.runtime = request.POST['runtime']
+
+            if not film.date:
+                film.date = '1990-01-01'
+
+            if film.runtime == '':
+                film.runtime = 0
         
             film.save()
 

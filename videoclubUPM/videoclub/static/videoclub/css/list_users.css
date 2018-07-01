@@ -1,4 +1,11 @@
+body{
+    font-family: 'Exo';
+}
 .customNavbar {
     margin-bottom: 0px;
     border: 0px;
+}
+
+.center{
+    text-align: center;
 }
