@@ -171,7 +171,10 @@ def doSeeMore(request):
             return redirect('/videoclub/films')
 
         film = Movie.objects.get(id_movie=id_movie)
-        url_poster = 'http://image.tmdb.org/t/p/w500/%s' % film.url_poster   
+        if film.url_poster == 'None':
+            url_poster = 'https://unamo.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png'
+        else:
+            url_poster = 'http://image.tmdb.org/t/p/w500/%s' % film.url_poster   
 
         cast_list = Cast.objects.prefetch_related('movies').filter(movies=film)
         
@@ -197,7 +200,10 @@ def doFindFilms(request):
         more_than_zero = True
 
         for movie in films:
-            movie.url_poster = 'http://image.tmdb.org/t/p/w185/%s' % movie.url_poster 
+            if movie.url_poster == 'None':
+                movie.url_poster = 'https://unamo.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png'
+            else:
+                movie.url_poster = 'http://image.tmdb.org/t/p/w185/%s' % movie.url_poster
 
         context = {
             'more_than_zero': more_than_zero,
@@ -234,7 +240,10 @@ def find_filmsAdd(request):
             results = search_result['results']
 
             for element in results:
-                element['poster_path'] = 'http://image.tmdb.org/t/p/w185/%s' % element['poster_path']
+                if not element['poster_path']:
+                    element['poster_path'] = 'https://unamo.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png'
+                else:
+                    element['poster_path'] = 'http://image.tmdb.org/t/p/w185/%s' % element['poster_path']
                 
         context = {
                 'searched': searched,
@@ -257,7 +266,10 @@ def doSeeMoreToAdd(request):
         found = True
         result_film = response_film.json()
         poster_path_aux = result_film['poster_path']
-        result_film['poster_path'] = 'http://image.tmdb.org/t/p/w500/%s' % result_film['poster_path']
+        if not result_film['poster_path']:
+            result_film['poster_path'] = 'https://unamo.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png'
+        else:
+            result_film['poster_path'] = 'http://image.tmdb.org/t/p/w500/%s' % result_film['poster_path']
         youtube_video = 'https://www.youtube.com/embed/KolfEhV-KiA?rel=0' 
 
         endpoint_video = 'https://api.themoviedb.org/3/movie/{id_number}/videos?api_key={key_id}'
@@ -355,7 +367,7 @@ def doAddFilm(request):
             if not film.date:
                 film.date = '1990-01-01'
 
-            if film.runtime == '':
+            if film.runtime == 'None':
                 film.runtime = 0
         
             film.save()
