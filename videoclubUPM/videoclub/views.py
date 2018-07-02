@@ -150,7 +150,10 @@ def films(request):
     more_than_zero = False
     for movie in films:
         more_than_zero = True
-        movie.url_poster = 'http://image.tmdb.org/t/p/w185/%s' % movie.url_poster
+        if movie.url_poster == 'None':
+            movie.url_poster = 'https://unamo.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png'
+        else:
+            movie.url_poster = 'http://image.tmdb.org/t/p/w185/%s' % movie.url_poster
     
     context = {
         'more_than_zero': more_than_zero,
