@@ -1,5 +1,6 @@
 body{
-    background-color: #c6c6c6;
+    font-family: 'Exo';
+    background-color: #f3f3f3;
 }
 
 .customNavbar {
@@ -15,18 +16,17 @@ body{
     padding-top: 1%
 }
 
-#film_info{
-    margin-inline-end: 2%;
-    margin-inline-start: 2%;
-    margin-block-end: 1%;
-    margin-block-start: 1%;
-    background: #f3f3f3;
-}
-
-.paddingStart {
-    padding-inline-start: -0%
-}
-
 .dateColor {
     color: #394450
+}
+.bold{
+    font-weight: bold
+}
+a.list-group-item {
+    height:auto;
+    min-height:300px;
+}
+
+.margin-see-more{
+    margin-block-start: 4%
 }

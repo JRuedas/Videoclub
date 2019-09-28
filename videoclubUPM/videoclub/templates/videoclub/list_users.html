@@ -8,78 +8,91 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Create user - Videoclub UPM</title>
+    <title>Users - Videoclub UPM</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href={% static 'videoclub/css/list_users.css' %}>
+    <link href="https://fonts.googleapis.com/css?family=Exo" rel="stylesheet">
 </head>
 
-<body class="">
-    <body>
-        <nav class="navbar navbar-inverse customNavbar">
-          <div class="container-fluid">
+<body>
+    <nav class="navbar navbar-default navbar-inverse customNavbar" role="navigation">
+        <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-              <a class="navbar-brand" href={% url 'films' %}>Videoclub Online UPM</a>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href={% url 'films' %}>Videoclub Online UPM</a>
             </div>
-            <ul class="nav navbar-nav navbar-right">
-                {% if user.is_staff %}
-                <li class="admin">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href={% url 'create_user' %}>Create user</a>
-                        </li>
-                    </ul>
-                </li>
-                {% endif %}
-                <li class="profile">
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    {% if user.is_staff %}
+                    <li>
+                        <a href={% url 'create_user' %}>Create user</a>
+                    </li>
+                    {% endif %}
+                    <li class="profile">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href={% url 'edit_profile' %}>Edit profile</a>
+                                    <a href={% url 'edit_profile' %}>Edit profile</a>
                             </li>
                             <li>
                                 <a href={% url 'change_password' %}>Change password</a>
                             </li>
                         </ul>
-                </li>
-                <li>
-                    <a href={% url 'doLogout' %}>Logout</a>
-                </li>
-            </ul>
-          </div>
-        </nav>
-               
-        <div>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <td>Username</td>
-                        <td>First name</td>
-                        <td>Last name</td>
-                        <td>Email</td>
-                        <td>Admin</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for user in users %}
-                        <tr>
-                            <td><a href="{% url 'modify_user' %}?username={{ user.username | urlencode }}">{{ user.username }}</a></td>
-                            <td>{{ user.first_name }}</td>
-                            <td>{{ user.last_name }}</td>
-                            <td>{{ user.email }}</td>
-                            <td>{{ user.is_staff }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </li>
+                    <li>
+                        <a href={% url 'doLogout' %}>Logout</a>
+                    </li>
+                </ul>
+            </div> <!-- /.navbar-collapse -->
+        </div> <!-- /.container-fluid -->
+    </nav>
+
+    <div class="container-fluid">
+        <div class='row'>
+            <div class="col-md-12">
+                <h1 class="center">Users</h1>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <th>Username</th>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>Email</th>
+                            <th>Admin</th>
+                            <th>Edit</th>                                   
+                            <th>Delete</th>
+                        </thead>
+
+                        <tbody>
+                            {% for user in users %}
+                            <tr>
+                                <td>{{ user.username }}</td>
+                                <td>{{ user.first_name }}</td>
+                                <td>{{ user.last_name }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.is_staff }}</td>
+                                <td><p data-placement="top" data-toggle="tooltip" title="Edit"><a class="btn btn-primary btn-xs" href="{% url 'modify_user' %}?username={{ user.username | urlencode }}"><span class="glyphicon glyphicon-pencil"></span></a></p></td>
+                                <td><p data-placement="top" data-toggle="tooltip" title="Delete"><a class="btn btn-danger btn-xs" href="{% url 'delete_user' %}?username={{ user.username | urlencode }}"><span class="glyphicon glyphicon-trash"></span></a></p></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
+    </div>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

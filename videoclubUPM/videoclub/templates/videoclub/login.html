@@ -13,43 +13,55 @@
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href={% static 'videoclub/css/login.css' %}>
+    <link href="https://fonts.googleapis.com/css?family=Exo" rel="stylesheet">
 </head>
 
 <body class="bgBody">
-    <nav class="navbar navbar-inverse customNavbar">
+    <nav class="navbar navbar-default navbar-inverse customNavbar" role="navigation">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
                 <a class="navbar-brand" href={% url 'index' %}>Videoclub Online UPM</a>
             </div>
-        </div>
+        </div> <!-- /.container-fluid -->
     </nav>
 
-    <div class="loginContainer">
-        <form action={% url 'doLogin' %} method="post">
-            {% csrf_token %}
-            <fieldset class="loginFieldSet" id="fieldContainer">
-                <h2>Log In</h2>
-                <br>
-                <p>Username:</p>
-                <input type="text" name="username">
-                <br>
-                <br>
-                <p>Password:</p>
-                <input type="password" name="password">
-                <br>
-                <br>
-                <input type="submit" value="Submit">
-                <br>
-                <br>
-                {% for message in messages %}
-                <div class="alert alert-danger">
-                    {{ message }}
+    <div class="container centered">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><strong>Log In </strong></h3>
                 </div>
-                {% endfor %}
-            </fieldset>
-        </form>
+                <div class="panel-body">
+                    <form action={% url 'doLogin' %} method="POST" role="form">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="inputUsername">Username</label>
+                            <input type="text" name="username" class="form-control" id="inputUsername" placeholder="Enter username">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword">Password</label>
+                            <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password">
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-default">Log in</button>
+                    </form>
+                    <br>
+                    {% for message in messages %}
+                    <div class="alert alert-danger">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
     </div>
+
 </body>
 
 </html>

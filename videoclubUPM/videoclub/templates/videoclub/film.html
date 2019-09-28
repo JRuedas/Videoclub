@@ -7,73 +7,84 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-<!-- Bootstrap core CSS -->
+    <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href={% static 'videoclub/css/film.css' %}>
+    <link href="https://fonts.googleapis.com/css?family=Exo" rel="stylesheet">
 </head>
 
 <body>
-    <nav class="navbar navbar-inverse customNavbar">
+    <nav class="navbar navbar-default navbar-inverse customNavbar" role="navigation">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
                 <a class="navbar-brand" href={% url 'films' %}>Videoclub Online UPM</a>
             </div>
-            <ul class="nav navbar-nav navbar-right">
-                {% if user.is_staff %}
-                <li class="admin">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href={% url 'list_users' %}>List users</a>
-                        </li>
-                        <li>
-                            <a href={% url 'add_film' %}>Add film</a>
-                        </li>
-                    </ul>
-                </li>
-                {% endif %}
-                <li class="profile">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href={% url 'edit_profile' %}>Edit profile</a>
-                        </li>
-                        <li>
-                            <a href={% url 'change_password' %}>Change password</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a action={% url 'doLogout' %}>Log out</a>
-                </li>
-            </ul>
-        </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    {% if user.is_staff %}
+                    <li class="admin">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href={% url 'list_users' %}>List users</a>
+                            </li>
+                            <li>
+                                <a href={% url 'add_film' %}>Add film</a>
+                            </li>
+                        </ul>
+                    </li>
+                    {% endif %}
+                    <li class="profile">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href={% url 'edit_profile' %}>Edit profile</a>
+                            </li>
+                            <li>
+                                <a href={% url 'change_password' %}>Change password</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href={% url 'doLogout' %}>Logout</a>
+                    </li>
+                </ul>
+            </div> <!-- /.navbar-collapse -->
+        </div> <!-- /.container-fluid -->
     </nav>
 
     {% if found %}
     <div class="container-fluid" id="film_info">
         <div class="row featurette">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="container-fluid">
-                    <img class="featurette-image img-responsive" src={{ url_poster }} alt="img" />
+                    <img class="featurette-image img-rounded img-responsive" src={{ url_poster }} alt="img" />
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-7">
                 <div class="container-fluid">
-                    <h1 id="title">{{ film.title }}</h1>
+                    <h1 class="bold">{{ film.title }}</h1>
                 </div>
                 <br>
                 <div class="container-fluid">
-                    <h3>Overview</h3>
+                    <h3 class="bold">Overview</h3>
                     <p>{{ film.overview }}</p>
                 </div>
                 <div class="container-fluid">
-                    <h3>Video</h3>
+                    <h3 class="bold">Video</h3>
                     <div class="embed-responsive embed-responsive-16by9">
                         <iframe src={{ film.url_video }} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                     </div>
@@ -103,16 +114,17 @@
                         <input type='hidden' name='director' value="{{ film.director }}"/>
                         <input type='hidden' name='cast_list' value="{{ cast_list }}"/>
 
-                        <input type="submit" value="Add" class="btn btn-default">
+                        <input type="submit" value="Add" class="btn btn-success btn-number"><span class="btn-label">
                     </form>
                     {% else %}
-                        <h4> Movie already exists in the DataBase</h4>
-                        <a href="{% url 'doDeleteFilm' %}?filmId={{ filmId | urlencode }}" class="btn btn-default">Delete</a>
-                        <a href="{% url 'doEditFilm' %}?filmId={{ filmId | urlencode }}" class="btn btn-default">Edit</a>
+                        <h4 class="bold"> Movie already exists in the DataBase</h4>
+                        <a href="{% url 'doDeleteFilm' %}?filmId={{ filmId | urlencode }}" class="btn btn-labeled btn-danger">
+                            <span class="btn-label"> <i class="glyphicon glyphicon-trash"></i></span>  Delete</a>
+                        <a href="{% url 'doEditFilm' %}?filmId={{ filmId | urlencode }}" class="btn btn-labeled btn-primary">Edit</a>
                     {% endif %}
                     {% endif %}
                     {% endblock %}
-                    <h3>Facts</h3>
+                    <h3 class="bold">Facts</h3>
                     <h5>Original title: </h5> {{ film.original_title }}
                     <h5>Release date: </h5> {{ film.date }}
                     <h5>Original language: </h5> {{ film.original_language }}
@@ -122,9 +134,9 @@
                     <h5>Status: </h5> {{ film.status }} 
                     <br>
                     <br>
-                    <h3>Rating</h3> <h5>{{ film.vote_average }}</h5>
+                    <h3 class="bold">Rating</h3> <h4>{{ film.vote_average }}</h4>
                     <br>
-                    <h3>Cast</h3>
+                    <h3 class="bold">Cast</h3>
                     <h5>Director: </h5> {{ film.director }}
                     <h5>Main: </h5>
                     {% for member in cast_list %}

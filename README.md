@@ -1,2 +1,6 @@
-# Videoclub
-Repositorio para la asignatura de Diseño de Aplicaciones Web de la Escuela Tecnica Superior de Ingenieros Informaticos de la UPM
+# Autores
+Jonathan Ruedas Mora
+Adrian Torres Martel
+
+# Uso de la aplicacion
+Es necesario instalar el modulo requests usando la herramienta pip de python.

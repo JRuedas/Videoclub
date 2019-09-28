@@ -12,24 +12,59 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
     crossorigin="anonymous">
   <link rel="stylesheet" href={% static 'videoclub/css/index.css' %}>
+  <link href="https://fonts.googleapis.com/css?family=Exo" rel="stylesheet">
 </head>
 
 <body>
-  <nav class="navbar navbar-inverse customNavbar">
+  <nav class="navbar navbar-default navbar-inverse customNavbar" role="navigation">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
         <a class="navbar-brand" href={% url 'index' %}>Videoclub Online UPM</a>
       </div>
+
       <!-- Collect the nav links, forms, and other content for toggling -->
-      <div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
-          <li>
-            <a href={% url 'login' %}>Login</a>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a>
+            <ul id="login-dp" class="dropdown-menu">
+              <li>
+                <div class="row">
+                  <div class="col-md-12">
+                    <form class="form" role="form" method="post" action={% url 'doLogin' %} accept-charset="UTF-8" id="login-nav">
+                      {% csrf_token %}
+                      <div class="form-group">
+                        <label class="sr-only" for="usernameInput">Username</label>
+                        <input type="text" class="form-control" id="usernameInput" name="username" placeholder="Username" required>
+                      </div>
+                      <div class="form-group">
+                        <label class="sr-only" for="passwordInput">Password</label>
+                        <input type="password" class="form-control" id="passwordInput" name="password" placeholder="Password" required>
+                      </div>
+                      <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                      </div>
+                      {% for message in messages %}
+                      <div class="alert alert-danger">
+                          {{ message }}
+                      </div>
+                      {% endfor %}
+                    </form>
+                  </div>
+                </div>
+              </li>
+            </ul>
           </li>
         </ul>
-      </div>
-    </div>
+      </div> <!-- /.navbar-collapse -->
+    </div> <!-- /.container-fluid -->
   </nav>
 
   <div class="container-fluid">
@@ -45,19 +80,18 @@
     <div class="container-fluid">
       <div>
         <ul class="nav navbar-nav">
-          <li class="active">
-            <a href="#">Information
-              <span class="sr-only">(current)</span>
+          <li class="active" id="liInfo">
+            <a href='#' id="showInfo" class="showFunction">Information
             </a>
           </li>
-          <li>
-            <a href="#">Devices</a>
+          <li id="liDevices">
+            <a href="#" id="showDevices" class="showFunction">Devices</a>
           </li>
-          <li>
-            <a href="#">Pricing</a>
+          <li id="liPricing">
+            <a href="#" id="showPricing" class="showFunction">Pricing</a>
           </li>
-          <li>
-            <a href="#">About Us</a>
+          <li id="liAbout">
+            <a href="#" id="showAbout" class="showFunction">About Us</a>
           </li>
         </ul>
       </div>
@@ -65,7 +99,7 @@
   </nav>
 
   <div class="container-fluid invertedColors">
-    <br> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam accumsan felis sit amet libero congue, vel viverra metus
+    <br><div class="container-fluid" id="toShow">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam accumsan felis sit amet libero congue, vel viverra metus
     faucibus. Proin aliquet dictum varius. Etiam molestie congue tincidunt. Donec sed lacus purus. Aliquam hendrerit dolor
     sapien, id efficitur urna viverra vel. Suspendisse tempus neque quis neque vulputate, imperdiet aliquet erat tincidunt.
     Aliquam erat volutpat. Sed lacinia elit ac gravida vulputate. Fusce sagittis ante sed velit porta tristique. Pellentesque
@@ -91,16 +125,17 @@
     augue. Donec gravida, quam at dignissim laoreet, sem augue laoreet elit, vitae ullamcorper ligula magna id quam. Morbi
     vestibulum arcu diam. Proin condimentum semper elementum. Nam lobortis augue diam, in accumsan nulla iaculis sed. Nulla
     tempus sed eros at dignissim. Nulla facilisi. Proin condimentum justo nec gravida finibus. Fusce euismod vel nulla ac
-    consectetur. Mauris at tincidunt leo.
+    consectetur. Mauris at tincidunt leo.</div>
+    <div class="container-fluid invertedColors footerPadding">
+      <footer>
+        <p>&copy; Dise&ntilde;o de aplicaciones web.</p>
+      </footer>
+    </div>
   </div>
 
-  <div class="container-fluid invertedColors footerPadding">
-    <footer>
-      <p>&copy; Dise&ntilde;o de aplicaciones web.</p>
-    </footer>
-  </div>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src={% static 'videoclub/scripts/script.js' %}></script>
 </body>
 
 </html>

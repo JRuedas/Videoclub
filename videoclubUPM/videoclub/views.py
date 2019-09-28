@@ -2,16 +2,15 @@ from django.shortcuts import render, redirect
 from django.template import loader
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.models import User
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-
+from videoclub.models import Movie, Cast
 from . import forms
 import requests
-from videoclub.models import Movie, Cast
 import ast
+
 # Create your views here.
 
 key = "f6093d8fefcd7f83e17a8af193b48d8d"
@@ -58,7 +57,6 @@ def create_user(request):
     form = forms.CreateUserForm(request.POST)
 
     if request.method == 'POST':
-
         form = forms.CreateUserForm(request.POST)
 
         if form.is_valid():
@@ -76,12 +74,14 @@ def modify_user(request):
     user = User.objects.get_by_natural_key(username)
 
     if request.method == 'POST':
-
         form = forms.UserUpdateForm(request.POST, instance=user)
 
         if form.is_valid():
             form.save()            
             return redirect("/videoclub/users")
+        else:
+            messages.error(request,'Username already exists')
+            return redirect("/videoclub/changeUser?username="+username)
     else:
         form = forms.UserUpdateForm(instance=user)
         context = {
@@ -104,12 +104,14 @@ def edit_profile(request):
     user = request.user
 
     if request.method == 'POST':
-
         form = forms.EditProfileForm(request.POST, instance=user)
 
         if form.is_valid():
             form.save()
             return redirect("/videoclub/films")
+        else:
+            messages.error(request,'Username already exists')
+            return redirect("/videoclub/editProfile")
     else:
         form = forms.EditProfileForm(instance=user)
         context = {
@@ -123,17 +125,17 @@ def change_password(request):
     user = request.user
 
     if request.method == 'POST':
-
-        form = PasswordChangeForm(data=request.POST, user=user)
+        form = forms.EditPasswordForm(data=request.POST, user=user)
 
         if form.is_valid():
             form.save()
             update_session_auth_hash(request, form.user)            
             return redirect("/videoclub/films")
         else:
-            return redirect('/videoclub/changePassword ')
+            messages.error(request,'Incorrect password')
+            return redirect('/videoclub/changePassword')
     else:
-        form = PasswordChangeForm(user=user)
+        form = forms.EditPasswordForm(user=user)
         context = {
             'form': form,
             "user" : user
@@ -148,7 +150,10 @@ def films(request):
     more_than_zero = False
     for movie in films:
         more_than_zero = True
-        movie.url_poster = 'http://image.tmdb.org/t/p/w185/%s' % movie.url_poster
+        if movie.url_poster == 'None':
+            movie.url_poster = 'https://unamo.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png'
+        else:
+            movie.url_poster = 'http://image.tmdb.org/t/p/w185/%s' % movie.url_poster
     
     context = {
         'more_than_zero': more_than_zero,
@@ -169,7 +174,10 @@ def doSeeMore(request):
             return redirect('/videoclub/films')
 
         film = Movie.objects.get(id_movie=id_movie)
-        url_poster = 'http://image.tmdb.org/t/p/w500/%s' % film.url_poster   
+        if film.url_poster == 'None':
+            url_poster = 'https://unamo.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png'
+        else:
+            url_poster = 'http://image.tmdb.org/t/p/w500/%s' % film.url_poster   
 
         cast_list = Cast.objects.prefetch_related('movies').filter(movies=film)
         
@@ -193,13 +201,16 @@ def doFindFilms(request):
         text = request.GET['text_search']
         films = list(Movie.objects.raw('SELECT * FROM videoclub_movie WHERE title LIKE \'%'+text+'%\''))
         more_than_zero = True
-        
+
         for movie in films:
-            movie.url_poster = 'http://image.tmdb.org/t/p/w185/%s' % movie.url_poster 
+            if movie.url_poster == 'None':
+                movie.url_poster = 'https://unamo.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png'
+            else:
+                movie.url_poster = 'http://image.tmdb.org/t/p/w185/%s' % movie.url_poster
 
         context = {
             'more_than_zero': more_than_zero,
-            'films': films
+            'films': films,
         } 
         
     return render(request, "videoclub/films.html", context)
@@ -232,7 +243,10 @@ def find_filmsAdd(request):
             results = search_result['results']
 
             for element in results:
-                element['poster_path'] = 'http://image.tmdb.org/t/p/w185/%s' % element['poster_path']
+                if not element['poster_path']:
+                    element['poster_path'] = 'https://unamo.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png'
+                else:
+                    element['poster_path'] = 'http://image.tmdb.org/t/p/w185/%s' % element['poster_path']
                 
         context = {
                 'searched': searched,
@@ -255,8 +269,11 @@ def doSeeMoreToAdd(request):
         found = True
         result_film = response_film.json()
         poster_path_aux = result_film['poster_path']
-        result_film['poster_path'] = 'http://image.tmdb.org/t/p/w500/%s' % result_film['poster_path']
-        youtube_video = 'https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0' 
+        if not result_film['poster_path']:
+            result_film['poster_path'] = 'https://unamo.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png'
+        else:
+            result_film['poster_path'] = 'http://image.tmdb.org/t/p/w500/%s' % result_film['poster_path']
+        youtube_video = 'https://www.youtube.com/embed/KolfEhV-KiA?rel=0' 
 
         endpoint_video = 'https://api.themoviedb.org/3/movie/{id_number}/videos?api_key={key_id}'
         url_video = endpoint_video.format(key_id=key, id_number=id_movie)
@@ -277,11 +294,16 @@ def doSeeMoreToAdd(request):
             crew = search_credits['crew']
             cast_list=[]
             director = ''
-            for i in range(5):
-                if cast_result[i]:
-                    cast_aux = cast_result[i]
+            if len(cast_result) > 5:
+                for i in range(5):
+                    if cast_result[i]:
+                        cast_aux = cast_result[i]
+                        cast_list.append(cast_aux['name'])
+            else:
+                for member in cast_result:
+                    cast_aux = member
                     cast_list.append(cast_aux['name'])
-            
+         
             for member in crew:
                 if member['job'] == 'Director':
                     director = member['name']
@@ -344,6 +366,12 @@ def doAddFilm(request):
             film.original_language = request.POST['original_language']
             film.status = request.POST['status']
             film.runtime = request.POST['runtime']
+
+            if not film.date:
+                film.date = '1990-01-01'
+
+            if film.runtime == 'None':
+                film.runtime = 0
         
             film.save()
 
@@ -380,6 +408,9 @@ def edit_film(request):
         if form.is_valid():
             form.save()
             return redirect("/videoclub/films")
+        else:
+            messages.error(request,'Tiene un error en el formulario')
+            return redirect("/videoclub/editFilm?filmId="+filmId)
     else:
         form = forms.EditFilmForm(instance=film)
         context = {
